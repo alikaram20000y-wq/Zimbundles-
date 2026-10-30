@@ -1114,4 +1114,18 @@ function escapeHtml(value) {
 
 
 document.getElementById("checkoutModal")
-  .addEventListener("click", functio
+  .addEventListener("click", function(event) {
+
+    if (event.target === this) {
+      closeCheckout();
+    }
+
+  });
+
+
+renderPlans("all");
+
+</script>
+
+</body>
+</html>
