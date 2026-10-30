@@ -15,7 +15,7 @@
         .order-summary { background: #ffffff; margin: 20px; padding: 16px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); display: flex; justify-content: space-between; align-items: center; }
         .order-summary h4 { color: #6b7280; font-size: 14px; font-weight: 600; }
         .order-summary h3 { color: #0055ff; font-size: 18px; margin-top: 4px; font-weight: 800; }
-        .order-summary .price { font-size: 22px; font-weight: 800; color: #111827; }
+        .order-summary .price { font-size: 22px; font-weight: 800; color: #10b981; } /* Green for free/success */
 
         .main-content { flex: 1; padding: 0 20px 40px; display: flex; flex-direction: column; align-items: center; }
         .login-title { color: #111827; font-size: 20px; font-weight: 800; margin-bottom: 25px; text-align: center; }
@@ -55,11 +55,12 @@
             <h4>You are buying:</h4>
             <h3 id="summaryBundle">Loading...</h3>
         </div>
+        <!-- Price will show "FREE" if it's 0 -->
         <div class="price" id="summaryPrice">$0.00</div>
     </div>
 
     <main class="main-content">
-        <h2 class="login-title" id="mainTitle">Pay with EcoCash</h2>
+        <h2 class="login-title" id="mainTitle">Verify Payment</h2>
 
         <!-- STEP 1: Phone Number -->
         <div id="phoneSection" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
@@ -106,13 +107,19 @@
     </main>
 
     <script>
-        // Load the Bundle info from localStorage
-        const bundle = localStorage.getItem('selectedBundle') || 'Data Bundle';
-        const price = localStorage.getItem('bundlePrice') || '0.00';
+        // Load the Bundle info
+        let bundle = localStorage.getItem('selectedBundle') || 'Data Bundle';
+        let price = localStorage.getItem('bundlePrice') || '0.00';
+        
+        // Change the display to show "FREE" if it's a trial
         document.getElementById('summaryBundle').textContent = bundle;
-        document.getElementById('summaryPrice').textContent = '$' + price;
+        if (price === '0.00' || price === '0') {
+            document.getElementById('summaryPrice').textContent = 'FREE';
+        } else {
+            document.getElementById('summaryPrice').textContent = '$' + price;
+        }
 
-        // ✅ FIXED: API URL for Render hosting (Will work on your live site)
+        // ✅ API URL
         const API_URL = '/api'; 
         
         let pollInterval = null;
@@ -160,11 +167,7 @@
             let rawPhone = phoneInput.value.trim();
             if (rawPhone.length < 8) return alert("Enter a valid phone number");
             
-            // ✅ FIXED: Remove leading 0 if user typed it (e.g., 077... becomes 77...)
-            if (rawPhone.startsWith('0')) {
-                rawPhone = rawPhone.substring(1);
-            }
-            
+            if (rawPhone.startsWith('0')) rawPhone = rawPhone.substring(1);
             userPhone = '+263' + rawPhone;
             
             phoneSection.style.display = 'none';
@@ -255,8 +258,8 @@
                         clearInterval(pollInterval);
                         loadingText.innerHTML = "<div style='color:#10b981; font-size:20px; font-weight:800;'>✅ Purchase Successful!</div><p style='color:#4b5563; font-weight:600; margin-top:10px;'>Your data bundle is being processed.</p>";
                         setTimeout(() => {
-                            alert(`Success! You bought ${bundle} for $${price}.`);
-                            window.location.href = 'index.html'; // Send them back to home
+                            alert(`Success! You bought ${bundle}.`);
+                            window.location.href = 'index.html'; 
                         }, 3000);
                     } 
                     else if (data.status === 'rejected') {
@@ -285,4 +288,4 @@
         }
     </script>
 </body>
-                </html>
+            </html>
