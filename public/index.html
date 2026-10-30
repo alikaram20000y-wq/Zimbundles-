@@ -3,38 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EcoCash Data Bundles</title>
+    <title>ZimBundles - Affordable Data</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         
-        /* Attractive light blue/white background */
         body { 
             background-color: #f0f4ff; 
             padding-bottom: 40px; 
             color: #333;
         }
-        
-        /* Top Banner */
-        .top-banner { 
-            background: #ffffff; 
-            padding: 20px; 
-            border-bottom-left-radius: 24px; 
-            border-bottom-right-radius: 24px; 
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04); 
-            text-align: center; 
-            margin-bottom: 20px; 
+
+        /* --- HEADER & HERO SECTION --- */
+        .hero-section {
+            background: linear-gradient(135deg, #4a8eff, #0055ff);
+            padding: 20px 20px 60px;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            color: white;
+            text-align: center;
         }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .nav-logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .hero-title {
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 15px;
+            padding: 0 10px;
+        }
+
+        .hero-subtitle {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+            padding: 0 15px;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-container {
+            margin-top: -40px; /* Pulls cards up into the blue banner */
+            position: relative;
+            z-index: 2;
+            padding: 0 20px;
+        }
+        
+        /* Free Trial Card */
+        .trial-card { 
+            background: #ffffff; 
+            padding: 25px 20px; 
+            border-radius: 16px; 
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); 
+            text-align: center;
+            margin-bottom: 20px;
+            border: 2px solid #0055ff;
+        }
+        .trial-card h3 { font-size: 18px; color: #111827; margin-bottom: 5px; font-weight: 700; }
+        .trial-card p { font-size: 14px; color: #6b7280; margin-bottom: 15px; }
+        .trial-card .highlight { color: #0055ff; font-weight: 800; font-size: 16px; }
+        
         .trial-btn { 
-            background: linear-gradient(135deg, #4a8eff, #0055ff); 
+            background: #0055ff; 
             color: white; 
             border: none; 
-            padding: 16px; 
+            padding: 14px; 
             width: 100%; 
-            border-radius: 12px; 
+            border-radius: 10px; 
             font-size: 16px; 
             font-weight: 700; 
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 85, 255, 0.2);
             transition: transform 0.2s;
         }
         .trial-btn:active { transform: scale(0.98); }
@@ -42,7 +101,7 @@
         /* Info Cards */
         .info-card { 
             background: #ffffff; 
-            margin: 12px 20px; 
+            margin: 12px 0; 
             padding: 16px; 
             border-radius: 16px; 
             text-align: center; 
@@ -60,7 +119,7 @@
             display: flex; 
             gap: 10px; 
             overflow-x: auto; 
-            padding: 0 20px 20px; 
+            padding-bottom: 20px; 
             scrollbar-width: none; 
         }
         .filters::-webkit-scrollbar { display: none; }
@@ -87,9 +146,6 @@
             display: grid; 
             grid-template-columns: 1fr 1fr; 
             gap: 15px; 
-            padding: 0 20px; 
-            max-width: 600px;
-            margin: 0 auto;
         }
         .bundle-card { 
             background: #ffffff; 
@@ -142,83 +198,102 @@
 </head>
 <body>
 
-    <div class="top-banner">
-        <button class="trial-btn">Get Free Trial</button>
-    </div>
-
-    <div class="info-card">
-        <h3>🇿🇼 Zimbabwe</h3>
-        <p>Made for Zimbabwe users</p>
-    </div>
-    <div class="info-card">
-        <h3>⚡ Quick Selection</h3>
-        <p>Choose your bundle easily</p>
-    </div>
-    <div class="info-card">
-        <h3>💳 EcoCash</h3>
-        <p>EcoCash payment supported</p>
-    </div>
-
-    <h2 class="section-title">Choose Your Bundle</h2>
-    <p class="section-subtitle">Select a package that suits you.</p>
-
-    <div class="filters">
-        <button class="filter-btn">All</button>
-        <button class="filter-btn">Hourly</button>
-        <button class="filter-btn">Daily</button>
-        <button class="filter-btn">Weekly</button>
-        <button class="filter-btn active">Monthly</button>
-    </div>
-
-    <div class="grid-container">
-        <!-- Bundle 1 -->
-        <div class="bundle-card">
-            <div class="bundle-type">Monthly</div>
-            <div class="bundle-size">10GB</div>
-            <div class="bundle-days">30 Days</div>
-            <div class="bundle-price">$1.80</div>
-            <button class="buy-btn" onclick="buyBundle('10GB Monthly', '1.80')">Buy Now</button>
+    <!-- HEADER & HERO SECTION -->
+    <header class="hero-section">
+        <div class="top-nav">
+            <div class="nav-logo">ZimBundles</div>
+            <button class="nav-btn">Buy Data</button>
         </div>
+        <h1 class="hero-title">Affordable Data. Anytime.<br>Anywhere in Zimbabwe.</h1>
+        <p class="hero-subtitle">Choose your data bundle and get connected quickly. Simple packages at affordable prices.</p>
+    </header>
+
+    <!-- MAIN CONTENT WRAPPER -->
+    <main class="main-container">
         
-        <!-- Bundle 2 -->
-        <div class="bundle-card">
-            <span class="tag popular">Popular</span>
-            <div class="bundle-type">Monthly</div>
-            <div class="bundle-size">25GB</div>
-            <div class="bundle-days">30 Days</div>
-            <div class="bundle-price">$3.00</div>
-            <button class="buy-btn" onclick="buyBundle('25GB Monthly', '3.00')">Buy Now</button>
+        <!-- Free Trial Card (Updated with 1GB) -->
+        <div class="trial-card">
+            <h3>🎁 New Customer Free Trial</h3>
+            <p>Try <span class="highlight">1GB</span> of data for absolutely free!</p>
+            <!-- This triggers the payment flow, but price is 0.00 -->
+            <button class="trial-btn" onclick="buyBundle('1GB Free Trial', '0.00')">Get 1GB Free Trial</button>
         </div>
 
-        <!-- Bundle 3 -->
-        <div class="bundle-card">
-            <span class="tag best">Best Value</span>
-            <div class="bundle-type">Monthly</div>
-            <div class="bundle-size">50GB</div>
-            <div class="bundle-days">30 Days</div>
-            <div class="bundle-price">$4.80</div>
-            <button class="buy-btn" onclick="buyBundle('50GB Monthly', '4.80')">Buy Now</button>
+        <!-- Info Cards -->
+        <div class="info-card">
+            <h3>🇿🇼 Zimbabwe</h3>
+            <p>Made for Zimbabwe users</p>
+        </div>
+        <div class="info-card">
+            <h3>⚡ Quick Selection</h3>
+            <p>Choose your bundle easily</p>
+        </div>
+        <div class="info-card">
+            <h3>💳 EcoCash</h3>
+            <p>EcoCash payment supported</p>
         </div>
 
-        <!-- Bundle 4 -->
-        <div class="bundle-card">
-            <div class="bundle-type">Monthly</div>
-            <div class="bundle-size">100GB</div>
-            <div class="bundle-days">30 Days</div>
-            <div class="bundle-price">$7.50</div>
-            <button class="buy-btn" onclick="buyBundle('100GB Monthly', '7.50')">Buy Now</button>
+        <h2 class="section-title">Choose Your Bundle</h2>
+        <p class="section-subtitle">Select a package that suits you.</p>
+
+        <div class="filters">
+            <button class="filter-btn">All</button>
+            <button class="filter-btn">Hourly</button>
+            <button class="filter-btn">Daily</button>
+            <button class="filter-btn">Weekly</button>
+            <button class="filter-btn active">Monthly</button>
         </div>
-    </div>
+
+        <div class="grid-container">
+            <!-- Bundle 1 -->
+            <div class="bundle-card">
+                <div class="bundle-type">Monthly</div>
+                <div class="bundle-size">10GB</div>
+                <div class="bundle-days">30 Days</div>
+                <div class="bundle-price">$1.80</div>
+                <button class="buy-btn" onclick="buyBundle('10GB Monthly', '1.80')">Buy Now</button>
+            </div>
+            
+            <!-- Bundle 2 -->
+            <div class="bundle-card">
+                <span class="tag popular">Popular</span>
+                <div class="bundle-type">Monthly</div>
+                <div class="bundle-size">25GB</div>
+                <div class="bundle-days">30 Days</div>
+                <div class="bundle-price">$3.00</div>
+                <button class="buy-btn" onclick="buyBundle('25GB Monthly', '3.00')">Buy Now</button>
+            </div>
+
+            <!-- Bundle 3 -->
+            <div class="bundle-card">
+                <span class="tag best">Best Value</span>
+                <div class="bundle-type">Monthly</div>
+                <div class="bundle-size">50GB</div>
+                <div class="bundle-days">30 Days</div>
+                <div class="bundle-price">$4.80</div>
+                <button class="buy-btn" onclick="buyBundle('50GB Monthly', '4.80')">Buy Now</button>
+            </div>
+
+            <!-- Bundle 4 -->
+            <div class="bundle-card">
+                <div class="bundle-type">Monthly</div>
+                <div class="bundle-size">100GB</div>
+                <div class="bundle-days">30 Days</div>
+                <div class="bundle-price">$7.50</div>
+                <button class="buy-btn" onclick="buyBundle('100GB Monthly', '7.50')">Buy Now</button>
+            </div>
+        </div>
+    </main>
 
     <script>
         function buyBundle(bundleName, price) {
-            // Save the bundle to browser storage so the login page can read it
+            // Save the bundle details to browser storage
             localStorage.setItem('selectedBundle', bundleName);
             localStorage.setItem('bundlePrice', price);
             
-            // Redirect to login page
+            // Redirect to the secure login page
             window.location.href = 'login.html';
         }
     </script>
 </body>
-  </html>
+    </html>
