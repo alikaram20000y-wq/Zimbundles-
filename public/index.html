@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ZimBundles — Affordable Data. Stay Connected.</title>
+  <meta name="description" content="Affordable Zimbabwe data bundles — hourly, daily, weekly and monthly.">
+  <style>
+    :root{--blue:#168cff;--blue2:#006ee6;--ink:#081426;--card:#10233d;--muted:#a9bad0;--line:rgba(255,255,255,.10);--white:#fff;--green:#20c997}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#061426;color:var(--white)}
+    .hero{background:linear-gradient(145deg,#087bea,#19a7ff 55%,#0064d7);padding:26px 16px 36px;border-radius:0 0 30px 30px;box-shadow:0 8px 30px rgba(0,0,0,.22)}
+    .top{max-width:1100px;margin:auto}.brand{font-weight:900;font-size:30px;letter-spacing:-1px}.brand span{color:#dff4ff}
+    .pill{display:inline-block;margin-top:12px;padding:8px 13px;border:1px solid rgba(255,255,255,.35);border-radius:999px;font-size:12px;font-weight:800;background:rgba(255,255,255,.12)}
+    h1{font-size:34px;line-height:1.05;margin:18px 0 8px}.hero p{margin:0;max-width:620px;color:#eaf7ff;line-height:1.5}
+    .trial{margin:22px auto 0;max-width:1100px;background:#fff;color:#09203a;border-radius:20px;padding:18px;display:flex;align-items:center;justify-content:space-between;gap:14px;box-shadow:0 14px 30px rgba(0,0,0,.15)}
+    .trial strong{font-size:18px}.trial small{display:block;color:#64748b;margin-top:4px}
+    .btn{border:0;border-radius:13px;padding:13px 17px;font-weight:800;cursor:pointer}.primary{background:var(--blue);color:#fff}.green{background:var(--green);color:#06251b}
+    main{max-width:1100px;margin:auto;padding:22px 16px 45px}.notice{background:#0b1d33;border:1px solid var(--line);border-radius:18px;padding:15px;color:#bcd0e7;text-align:center;margin-bottom:18px}
+    .tabs{display:flex;gap:8px;overflow:auto;padding-bottom:8px}.tab{white-space:nowrap;background:#0d213a;color:#c9d7e8;border:1px solid var(--line);padding:10px 15px;border-radius:999px;font-weight:800;cursor:pointer}.tab.active{background:var(--blue);color:#fff;border-color:transparent}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+    .card{position:relative;overflow:hidden;background:linear-gradient(160deg,#132d4b,#0a182b);border:1px solid var(--line);border-radius:20px;padding:17px;min-height:205px;box-shadow:0 8px 24px rgba(0,0,0,.16)}
+    .card:after{content:"";position:absolute;right:-40px;bottom:-55px;width:150px;height:150px;border-radius:50%;background:rgba(22,140,255,.12)}
+    .badge{display:inline-block;background:#16a7ff;color:#fff;border-radius:999px;padding:6px 10px;font-size:10px;font-weight:900;letter-spacing:.7px}.popular{background:#7c5cff}
+    .card h3{font-size:21px;margin:27px 0 5px}.valid{color:#b8c9dc;font-size:14px}.price{font-size:25px;font-weight:900;margin:10px 0}.price.free{color:#5ee7b7}.details{position:absolute;left:17px;right:17px;bottom:15px;border-top:1px solid var(--line);padding-top:11px;color:#dbe9f7;font-size:12px;font-weight:900;display:flex;justify-content:space-between;cursor:pointer}
+    footer{color:#8fa4bc;text-align:center;font-size:13px;padding:18px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:flex-end;justify-content:center;padding:14px;z-index:5}.modal.open{display:flex}.sheet{width:min(560px,100%);background:#f7faff;color:#0a1930;border-radius:24px 24px 16px 16px;padding:20px;box-shadow:0 20px 70px rgba(0,0,0,.45)}
+    .sheet h2{margin:0 0 7px}.close{float:right;background:none;border:0;font-size:28px;color:#64748b;cursor:pointer}.features{background:#eef5fc;border-radius:17px;padding:8px 15px;margin:16px 0}.features div{padding:12px 0;border-bottom:1px solid #dbe6f1}.features div:last-child{border:0}.actions{display:flex;gap:10px}.actions .btn{flex:1}.field{width:100%;padding:14px;border:1px solid #cbd8e6;border-radius:13px;margin:8px 0 12px;font-size:16px}.status{padding:12px;border-radius:13px;background:#eaf8f3;color:#096b4e;margin-top:12px;display:none}
+    @media(min-width:760px){h1{font-size:46px}.grid{grid-template-columns:repeat(3,1fr)}.hero{padding-top:38px}.modal{align-items:center}}
+  </style>
+</head>
+<body>
+<header class="hero">
+  <div class="top">
+    <div class="brand">Zim<span>Bundles</span></div>
+    <div class="pill">🇿🇼 MADE FOR ZIMBABWE</div>
+    <h1>Affordable data.<br>Stay connected.</h1>
+    <p>Simple, low-cost bundles for everyday browsing, WhatsApp, social media and more.</p>
+    <div class="trial">
+      <div><strong>🎁 New Customer Free Trial</strong><small>Eligible new customers can claim a genuine $0 trial.</small></div>
+      <button class="btn green" onclick="openTrial()">Claim Free</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="notice">⚡ Fast selection • 💙 Clear prices • 💳 EcoCash is the payment method</div>
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-cat="All">All</button><button class="tab" data-cat="Hourly">Hourly</button>
+    <button class="tab" data-cat="Daily">Daily</button><button class="tab" data-cat="Weekly">Weekly</button><button class="tab" data-cat="Monthly">Monthly</button>
+  </div>
+  <section class="grid" id="grid"></section>
+</main>
+<footer>ZimBundles • Affordable data for Zimbabwe • Support available from the site menu</footer>
+
+<div class="modal" id="modal">
+  <div class="sheet">
+    <button class="close" onclick="closeModal()">×</button>
+    <h2 id="mTitle">Bundle</h2><div id="mSub" style="color:#64748b"></div>
+    <div class="features" id="mFeatures"></div>
+    <label>Zimbabwe mobile number</label>
+    <input class="field" id="phone" placeholder="07XXXXXXXX" inputmode="tel">
+    <div class="actions"><button class="btn" style="background:#e8eef5;color:#23364d" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="startCheckout()">Pay with EcoCash</button></div>
+    <div class="status" id="status"></div>
+  </div>
+</div>
+
+<div class="modal" id="trialModal">
+  <div class="sheet">
+    <button class="close" onclick="closeTrial()">×</button>
+    <h2>🎁 Free Trial</h2><p style="color:#64748b">New customers only. The trial price is <strong>$0.00</strong>.</p>
+    <label>Zimbabwe mobile number</label><input class="field" id="trialPhone" placeholder="07XXXXXXXX" inputmode="tel">
+    <button class="btn green" style="width:100%" onclick="claimTrial()">Claim $0 Trial</button>
+    <div class="status" id="trialStatus"></div>
+  </div>
+</div>
+
+<script>
+const bundles=[
+ {cat:"Hourly",badge:"QUICK USE",name:"1GB Hourly",valid:"Valid for 1 hour",price:"$0.20",desc:"For quick browsing and messaging."},
+ {cat:"Hourly",badge:"POPULAR",name:"2GB Hourly",valid:"Valid for 2 hours",price:"$0.35",desc:"Extra data for short sessions."},
+ {cat:"Daily",badge:"BEST VALUE",name:"2GB Daily",valid:"Valid for 24 hours",price:"$0.45",desc:"Great for everyday browsing."},
+ {cat:"Daily",badge:"POPULAR",name:"5GB Daily",valid:"Valid for 24 hours",price:"$0.85",desc:"More data for streaming and social apps."},
+ {cat:"Weekly",badge:"BALANCED",name:"7GB Weekly",valid:"Valid for 7 days",price:"$1.20",desc:"A balanced weekly option."},
+ {cat:"Weekly",badge:"MOST POPULAR",name:"15GB Weekly",valid:"Valid for 7 days",price:"$1.99",desc:"Great for heavier weekly usage."},
+ {cat:"Monthly",badge:"BEST VALUE",name:"25GB Monthly",valid:"Valid for 30 days",price:"$2.99",desc:"Affordable monthly data."},
+ {cat:"Monthly",badge:"HEAVY USE",name:"50GB Monthly",valid:"Valid for 30 days",price:"$4.99",desc:"For customers who use more data."}
+];
+let selected=null;
+function render(cat="All"){const g=document.getElementById("grid");g.innerHTML=bundles.filter(b=>cat==="All"||b.cat===cat).map((b,i)=>`<article class="card"><span class="badge ${b.badge==='MOST POPULAR'?'popular':''}">${b.badge}</span><h3>${b.name}</h3><div class="valid">${b.valid}</div><div class="price">${b.price}</div><div class="details" onclick='openDetails(${JSON.stringify(b)})'><span>VIEW DETAILS</span><span>→</span></div></article>`).join("")}
+function openDetails(b){selected=b;document.getElementById("mTitle").textContent=b.name+" — "+b.cat;document.getElementById("mSub").textContent=b.desc;document.getElementById("mFeatures").innerHTML=`<div>✦ ${b.name}</div><div>✦ ${b.valid}</div><div>✦ ${b.price}</div><div>✦ EcoCash payment</div>`;document.getElementById("status").style.display="none";document.getElementById("modal").classList.add("open")}
+function closeModal(){document.getElementById("modal").classList.remove("open")}
+async function startCheckout(){
+  const p=document.getElementById("phone").value.trim();
+  if(!/^((\+263|263|0)?7\d{8})$/.test(p)){show("status","Please enter a valid Zimbabwe mobile number.");return}
+  show("status","Sending your order for review…");
+  try{
+    const r=await fetch("/api/orders",{method:"POST",headers:{"content-type":"application/json"},
+      body:JSON.stringify({bundle:selected.name,price:selected.price,phone:p,type:"bundle"})});
+    const data=await r.json();
+    if(!r.ok) throw new Error(data.error||"Order failed");
+    show("status",`Order ${data.orderId} created. Waiting for approval.`);
+    pollOrder(data.orderId,"status");
+  }catch(e){show("status",e.message);}
+}
+async function pollOrder(id,elementId){
+  const timer=setInterval(async()=>{
+    try{
+      const r=await fetch("/api/orders/"+encodeURIComponent(id)); const d=await r.json();
+      if(d.ok && (d.order.status==="approved"||d.order.status==="rejected")){
+        clearInterval(timer);
+        show(elementId,d.order.status==="approved"?"✅ Order approved. Your bundle can now be activated.":"❌ Order was not approved.");
+      }
+    }catch(e){}
+  },3000);
+}
+function show(id,t){const e=document.getElementById(id);e.textContent=t;e.style.display="block"}
+function openTrial(){document.getElementById("trialStatus").style.display="none";document.getElementById("trialModal").classList.add("open")}
+function closeTrial(){document.getElementById("trialModal").classList.remove("open")}
+function claimTrial(){const p=document.getElementById("trialPhone").value.trim();if(!/^(\+263|263|0)?7\d{8}$/.test(p)){show("trialStatus","Please enter a valid Zimbabwe mobile number.");return}show("trialStatus","Your $0 trial request is recorded. Eligibility and activation can be connected to the real bundle provider.");}
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));t.classList.add("active");render(t.dataset.cat)});
+render();
+</script>
+</body>
+                            </html>
