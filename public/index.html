@@ -64,7 +64,7 @@
 
         /* --- MAIN CONTENT --- */
         .main-container {
-            margin-top: -40px; /* Pulls cards up into the blue banner */
+            margin-top: -40px; 
             position: relative;
             z-index: 2;
             padding: 0 20px;
@@ -198,7 +198,6 @@
 </head>
 <body>
 
-    <!-- HEADER & HERO SECTION -->
     <header class="hero-section">
         <div class="top-nav">
             <div class="nav-logo">ZimBundles</div>
@@ -208,18 +207,14 @@
         <p class="hero-subtitle">Choose your data bundle and get connected quickly. Simple packages at affordable prices.</p>
     </header>
 
-    <!-- MAIN CONTENT WRAPPER -->
     <main class="main-container">
         
-        <!-- Free Trial Card (Updated with 1GB) -->
         <div class="trial-card">
             <h3>🎁 New Customer Free Trial</h3>
             <p>Try <span class="highlight">1GB</span> of data for absolutely free!</p>
-            <!-- This triggers the payment flow, but price is 0.00 -->
             <button class="trial-btn" onclick="buyBundle('1GB Free Trial', '0.00')">Get 1GB Free Trial</button>
         </div>
 
-        <!-- Info Cards -->
         <div class="info-card">
             <h3>🇿🇼 Zimbabwe</h3>
             <p>Made for Zimbabwe users</p>
@@ -236,17 +231,19 @@
         <h2 class="section-title">Choose Your Bundle</h2>
         <p class="section-subtitle">Select a package that suits you.</p>
 
+        <!-- FILTER BUTTONS (Added onclick events) -->
         <div class="filters">
-            <button class="filter-btn">All</button>
-            <button class="filter-btn">Hourly</button>
-            <button class="filter-btn">Daily</button>
-            <button class="filter-btn">Weekly</button>
-            <button class="filter-btn active">Monthly</button>
+            <button class="filter-btn active" onclick="filterBundles('all', this)">All</button>
+            <button class="filter-btn" onclick="filterBundles('hourly', this)">Hourly</button>
+            <button class="filter-btn" onclick="filterBundles('daily', this)">Daily</button>
+            <button class="filter-btn" onclick="filterBundles('weekly', this)">Weekly</button>
+            <button class="filter-btn" onclick="filterBundles('monthly', this)">Monthly</button>
         </div>
 
-        <div class="grid-container">
-            <!-- Bundle 1 -->
-            <div class="bundle-card">
+        <div class="grid-container" id="bundleGrid">
+            
+            <!-- MONTHLY BUNDLES -->
+            <div class="bundle-card" data-category="monthly">
                 <div class="bundle-type">Monthly</div>
                 <div class="bundle-size">10GB</div>
                 <div class="bundle-days">30 Days</div>
@@ -254,8 +251,7 @@
                 <button class="buy-btn" onclick="buyBundle('10GB Monthly', '1.80')">Buy Now</button>
             </div>
             
-            <!-- Bundle 2 -->
-            <div class="bundle-card">
+            <div class="bundle-card" data-category="monthly">
                 <span class="tag popular">Popular</span>
                 <div class="bundle-type">Monthly</div>
                 <div class="bundle-size">25GB</div>
@@ -264,8 +260,7 @@
                 <button class="buy-btn" onclick="buyBundle('25GB Monthly', '3.00')">Buy Now</button>
             </div>
 
-            <!-- Bundle 3 -->
-            <div class="bundle-card">
+            <div class="bundle-card" data-category="monthly">
                 <span class="tag best">Best Value</span>
                 <div class="bundle-type">Monthly</div>
                 <div class="bundle-size">50GB</div>
@@ -274,26 +269,97 @@
                 <button class="buy-btn" onclick="buyBundle('50GB Monthly', '4.80')">Buy Now</button>
             </div>
 
-            <!-- Bundle 4 -->
-            <div class="bundle-card">
+            <div class="bundle-card" data-category="monthly">
                 <div class="bundle-type">Monthly</div>
                 <div class="bundle-size">100GB</div>
                 <div class="bundle-days">30 Days</div>
                 <div class="bundle-price">$7.50</div>
                 <button class="buy-btn" onclick="buyBundle('100GB Monthly', '7.50')">Buy Now</button>
             </div>
+
+            <!-- HOURLY BUNDLES (Sample data) -->
+            <div class="bundle-card" data-category="hourly">
+                <div class="bundle-type">Hourly</div>
+                <div class="bundle-size">500MB</div>
+                <div class="bundle-days">1 Hour</div>
+                <div class="bundle-price">$0.20</div>
+                <button class="buy-btn" onclick="buyBundle('500MB Hourly', '0.20')">Buy Now</button>
+            </div>
+
+            <div class="bundle-card" data-category="hourly">
+                <div class="bundle-type">Hourly</div>
+                <div class="bundle-size">1GB</div>
+                <div class="bundle-days">1 Hour</div>
+                <div class="bundle-price">$0.35</div>
+                <button class="buy-btn" onclick="buyBundle('1GB Hourly', '0.35')">Buy Now</button>
+            </div>
+
+            <!-- DAILY BUNDLES (Sample data) -->
+            <div class="bundle-card" data-category="daily">
+                <div class="bundle-type">Daily</div>
+                <div class="bundle-size">1.5GB</div>
+                <div class="bundle-days">24 Hours</div>
+                <div class="bundle-price">$0.50</div>
+                <button class="buy-btn" onclick="buyBundle('1.5GB Daily', '0.50')">Buy Now</button>
+            </div>
+
+            <div class="bundle-card" data-category="daily">
+                <div class="bundle-type">Daily</div>
+                <div class="bundle-size">3GB</div>
+                <div class="bundle-days">24 Hours</div>
+                <div class="bundle-price">$0.90</div>
+                <button class="buy-btn" onclick="buyBundle('3GB Daily', '0.90')">Buy Now</button>
+            </div>
+
+            <!-- WEEKLY BUNDLES (Sample data) -->
+            <div class="bundle-card" data-category="weekly">
+                <div class="bundle-type">Weekly</div>
+                <div class="bundle-size">5GB</div>
+                <div class="bundle-days">7 Days</div>
+                <div class="bundle-price">$1.20</div>
+                <button class="buy-btn" onclick="buyBundle('5GB Weekly', '1.20')">Buy Now</button>
+            </div>
+
+            <div class="bundle-card" data-category="weekly">
+                <div class="bundle-type">Weekly</div>
+                <div class="bundle-size">8GB</div>
+                <div class="bundle-days">7 Days</div>
+                <div class="bundle-price">$1.80</div>
+                <button class="buy-btn" onclick="buyBundle('8GB Weekly', '1.80')">Buy Now</button>
+            </div>
         </div>
     </main>
 
     <script>
+        // Function to handle the "Buy Now" button
         function buyBundle(bundleName, price) {
-            // Save the bundle details to browser storage
             localStorage.setItem('selectedBundle', bundleName);
             localStorage.setItem('bundlePrice', price);
-            
-            // Redirect to the secure login page
             window.location.href = 'login.html';
         }
+
+        // Function to handle the Filter buttons
+        function filterBundles(category, btn) {
+            // 1. Highlight the clicked button
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // 2. Show/Hide the bundles
+            const cards = document.querySelectorAll('.bundle-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex'; // Show
+                } else {
+                    card.style.display = 'none'; // Hide
+                }
+            });
+        }
+
+        // Run filterBundles on page load to show "Monthly" by default
+        document.addEventListener("DOMContentLoaded", () => {
+            filterBundles('monthly', document.querySelectorAll('.filter-btn')[4]);
+        });
     </script>
 </body>
-    </html>
+                </html>
