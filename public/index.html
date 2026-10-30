@@ -1,134 +1,1117 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ZimBundles — Affordable Data. Stay Connected.</title>
-  <meta name="description" content="Affordable Zimbabwe data bundles — hourly, daily, weekly and monthly.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZimBundles - Affordable Data</title>
+
   <style>
-    :root{--blue:#168cff;--blue2:#006ee6;--ink:#081426;--card:#10233d;--muted:#a9bad0;--line:rgba(255,255,255,.10);--white:#fff;--green:#20c997}
-    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#061426;color:var(--white)}
-    .hero{background:linear-gradient(145deg,#087bea,#19a7ff 55%,#0064d7);padding:26px 16px 36px;border-radius:0 0 30px 30px;box-shadow:0 8px 30px rgba(0,0,0,.22)}
-    .top{max-width:1100px;margin:auto}.brand{font-weight:900;font-size:30px;letter-spacing:-1px}.brand span{color:#dff4ff}
-    .pill{display:inline-block;margin-top:12px;padding:8px 13px;border:1px solid rgba(255,255,255,.35);border-radius:999px;font-size:12px;font-weight:800;background:rgba(255,255,255,.12)}
-    h1{font-size:34px;line-height:1.05;margin:18px 0 8px}.hero p{margin:0;max-width:620px;color:#eaf7ff;line-height:1.5}
-    .trial{margin:22px auto 0;max-width:1100px;background:#fff;color:#09203a;border-radius:20px;padding:18px;display:flex;align-items:center;justify-content:space-between;gap:14px;box-shadow:0 14px 30px rgba(0,0,0,.15)}
-    .trial strong{font-size:18px}.trial small{display:block;color:#64748b;margin-top:4px}
-    .btn{border:0;border-radius:13px;padding:13px 17px;font-weight:800;cursor:pointer}.primary{background:var(--blue);color:#fff}.green{background:var(--green);color:#06251b}
-    main{max-width:1100px;margin:auto;padding:22px 16px 45px}.notice{background:#0b1d33;border:1px solid var(--line);border-radius:18px;padding:15px;color:#bcd0e7;text-align:center;margin-bottom:18px}
-    .tabs{display:flex;gap:8px;overflow:auto;padding-bottom:8px}.tab{white-space:nowrap;background:#0d213a;color:#c9d7e8;border:1px solid var(--line);padding:10px 15px;border-radius:999px;font-weight:800;cursor:pointer}.tab.active{background:var(--blue);color:#fff;border-color:transparent}
-    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
-    .card{position:relative;overflow:hidden;background:linear-gradient(160deg,#132d4b,#0a182b);border:1px solid var(--line);border-radius:20px;padding:17px;min-height:205px;box-shadow:0 8px 24px rgba(0,0,0,.16)}
-    .card:after{content:"";position:absolute;right:-40px;bottom:-55px;width:150px;height:150px;border-radius:50%;background:rgba(22,140,255,.12)}
-    .badge{display:inline-block;background:#16a7ff;color:#fff;border-radius:999px;padding:6px 10px;font-size:10px;font-weight:900;letter-spacing:.7px}.popular{background:#7c5cff}
-    .card h3{font-size:21px;margin:27px 0 5px}.valid{color:#b8c9dc;font-size:14px}.price{font-size:25px;font-weight:900;margin:10px 0}.price.free{color:#5ee7b7}.details{position:absolute;left:17px;right:17px;bottom:15px;border-top:1px solid var(--line);padding-top:11px;color:#dbe9f7;font-size:12px;font-weight:900;display:flex;justify-content:space-between;cursor:pointer}
-    footer{color:#8fa4bc;text-align:center;font-size:13px;padding:18px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:flex-end;justify-content:center;padding:14px;z-index:5}.modal.open{display:flex}.sheet{width:min(560px,100%);background:#f7faff;color:#0a1930;border-radius:24px 24px 16px 16px;padding:20px;box-shadow:0 20px 70px rgba(0,0,0,.45)}
-    .sheet h2{margin:0 0 7px}.close{float:right;background:none;border:0;font-size:28px;color:#64748b;cursor:pointer}.features{background:#eef5fc;border-radius:17px;padding:8px 15px;margin:16px 0}.features div{padding:12px 0;border-bottom:1px solid #dbe6f1}.features div:last-child{border:0}.actions{display:flex;gap:10px}.actions .btn{flex:1}.field{width:100%;padding:14px;border:1px solid #cbd8e6;border-radius:13px;margin:8px 0 12px;font-size:16px}.status{padding:12px;border-radius:13px;background:#eaf8f3;color:#096b4e;margin-top:12px;display:none}
-    @media(min-width:760px){h1{font-size:46px}.grid{grid-template-columns:repeat(3,1fr)}.hero{padding-top:38px}.modal{align-items:center}}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f8ff;
+      color: #172033;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0757d5, #1689ff);
+      color: white;
+      padding: 18px 20px 45px;
+      border-radius: 0 0 28px 28px;
+    }
+
+    nav {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 23px;
+      font-weight: 800;
+    }
+
+    .nav-btn {
+      background: rgba(255,255,255,.18);
+      color: white;
+      border: 1px solid rgba(255,255,255,.35);
+      padding: 9px 14px;
+      border-radius: 20px;
+    }
+
+    .hero {
+      max-width: 900px;
+      margin: 42px auto 0;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 16px;
+      opacity: .95;
+      line-height: 1.5;
+    }
+
+    .trial {
+      max-width: 900px;
+      margin: -22px auto 25px;
+      position: relative;
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .trial strong {
+      color: #0757d5;
+      font-size: 19px;
+    }
+
+    .trial p {
+      margin-top: 5px;
+      color: #667085;
+      font-size: 14px;
+    }
+
+    .trial button {
+      background: #0757d5;
+      color: white;
+      border: 0;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 15px 18px 50px;
+    }
+
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .benefit {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,.04);
+    }
+
+    .benefit b {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .benefit span {
+      color: #667085;
+      font-size: 13px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin: 25px 0 18px;
+    }
+
+    .section-title h2 {
+      font-size: 25px;
+      margin-bottom: 6px;
+    }
+
+    .section-title p {
+      color: #667085;
+      font-size: 14px;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .tab {
+      border: 1px solid #d8e2f2;
+      background: white;
+      color: #344054;
+      padding: 9px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .tab.active {
+      background: #0757d5;
+      color: white;
+      border-color: #0757d5;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 15px;
+    }
+
+    .plan {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.06);
+      position: relative;
+      border: 1px solid #e7edf7;
+    }
+
+    .badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #e8f1ff;
+      color: #0757d5;
+      padding: 5px 8px;
+      border-radius: 8px;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    .plan h3 {
+      font-size: 18px;
+      margin-bottom: 7px;
+    }
+
+    .data {
+      font-size: 28px;
+      font-weight: 800;
+      color: #0757d5;
+    }
+
+    .duration {
+      color: #667085;
+      font-size: 13px;
+      margin: 4px 0 15px;
+    }
+
+    .price {
+      font-size: 23px;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .buy {
+      width: 100%;
+      background: #0757d5;
+      color: white;
+      border: 0;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .buy:hover {
+      background: #0646ad;
+    }
+
+    .why {
+      margin-top: 45px;
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .why-item h3 {
+      margin-bottom: 7px;
+      font-size: 16px;
+    }
+
+    .why-item p {
+      color: #667085;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .faq {
+      margin-top: 35px;
+    }
+
+    .faq details {
+      background: white;
+      margin-bottom: 10px;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid #e5eaf2;
+    }
+
+    .faq summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .faq p {
+      color: #667085;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-top: 10px;
+    }
+
+    footer {
+      background: #09254d;
+      color: white;
+      text-align: center;
+      padding: 25px 15px;
+      margin-top: 35px;
+    }
+
+    footer p {
+      opacity: .8;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    .modal-bg {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    .modal-bg.show {
+      display: flex;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 430px;
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 15px 50px rgba(0,0,0,.2);
+    }
+
+    .modal h2 {
+      margin-bottom: 8px;
+    }
+
+    .selected {
+      background: #f1f6ff;
+      border-radius: 12px;
+      padding: 14px;
+      margin: 15px 0;
+    }
+
+    .selected b {
+      color: #0757d5;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d0d5dd;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #0757d5;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .modal-actions button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: 0;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .cancel {
+      background: #eef1f5;
+      color: #344054;
+    }
+
+    .continue {
+      background: #0757d5;
+      color: white;
+    }
+
+    .message {
+      margin-top: 13px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #667085;
+    }
+
+    .error {
+      color: #c62828;
+    }
+
+    .success {
+      color: #16803c;
+    }
+
+    @media (max-width: 850px) {
+      .plans {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .benefits,
+      .why-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero h1 {
+        font-size: 29px;
+      }
+
+      .trial {
+        margin-left: 15px;
+        margin-right: 15px;
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+      }
+
+      .plans {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .plan {
+        padding: 15px;
+      }
+
+      .data {
+        font-size: 24px;
+      }
+
+      .price {
+        font-size: 20px;
+      }
+    }
   </style>
 </head>
+
 <body>
-<header class="hero">
-  <div class="top">
-    <div class="brand">Zim<span>Bundles</span></div>
-    <div class="pill">🇿🇼 MADE FOR ZIMBABWE</div>
-    <h1>Affordable data.<br>Stay connected.</h1>
-    <p>Simple, low-cost bundles for everyday browsing, WhatsApp, social media and more.</p>
-    <div class="trial">
-      <div><strong>🎁 New Customer Free Trial</strong><small>Eligible new customers can claim a genuine $0 trial.</small></div>
-      <button class="btn green" onclick="openTrial()">Claim Free</button>
-    </div>
+
+<header>
+  <nav>
+    <div class="logo">ZimBundles</div>
+    <button class="nav-btn" onclick="scrollToPlans()">Buy Data</button>
+  </nav>
+
+  <div class="hero">
+    <h1>Affordable Data. Anytime. Anywhere in Zimbabwe.</h1>
+    <p>
+      Choose your data bundle and get connected quickly.
+      Simple packages at affordable prices.
+    </p>
   </div>
 </header>
 
+<div class="trial">
+  <div>
+    <strong>🎁 New Customer Free Trial</strong>
+    <p>Try our service with a $0 free trial.</p>
+  </div>
+
+  <button onclick="openTrial()">Get Free Trial</button>
+</div>
+
 <main>
-  <div class="notice">⚡ Fast selection • 💙 Clear prices • 💳 EcoCash is the payment method</div>
-  <div class="tabs" id="tabs">
-    <button class="tab active" data-cat="All">All</button><button class="tab" data-cat="Hourly">Hourly</button>
-    <button class="tab" data-cat="Daily">Daily</button><button class="tab" data-cat="Weekly">Weekly</button><button class="tab" data-cat="Monthly">Monthly</button>
+
+  <div class="benefits">
+    <div class="benefit">
+      <b>🇿🇼 Zimbabwe</b>
+      <span>Made for Zimbabwe users</span>
+    </div>
+
+    <div class="benefit">
+      <b>⚡ Quick Selection</b>
+      <span>Choose your bundle easily</span>
+    </div>
+
+    <div class="benefit">
+      <b>💳 EcoCash</b>
+      <span>EcoCash payment supported</span>
+    </div>
   </div>
-  <section class="grid" id="grid"></section>
+
+  <section id="plans">
+
+    <div class="section-title">
+      <h2>Choose Your Bundle</h2>
+      <p>Select a package that suits you.</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="filterPlans('all',this)">All</button>
+      <button class="tab" onclick="filterPlans('hourly',this)">Hourly</button>
+      <button class="tab" onclick="filterPlans('daily',this)">Daily</button>
+      <button class="tab" onclick="filterPlans('weekly',this)">Weekly</button>
+      <button class="tab" onclick="filterPlans('monthly',this)">Monthly</button>
+    </div>
+
+    <div class="plans" id="plansContainer"></div>
+
+  </section>
+
+  <section class="why">
+    <div class="section-title">
+      <h2>Why ZimBundles?</h2>
+      <p>Simple and convenient data bundles.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-item">
+        <h3>📱 Easy to Use</h3>
+        <p>Choose your preferred bundle and follow the checkout process.</p>
+      </div>
+
+      <div class="why-item">
+        <h3>💰 Affordable</h3>
+        <p>Our packages are designed to offer affordable data options.</p>
+      </div>
+
+      <div class="why-item">
+        <h3>🇿🇼 Zimbabwe Focused</h3>
+        <p>Packages are designed specifically for customers in Zimbabwe.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <div class="section-title">
+      <h2>Frequently Asked Questions</h2>
+    </div>
+
+    <details>
+      <summary>How do I buy a bundle?</summary>
+      <p>Select a package, enter your Zimbabwe phone number and continue to payment.</p>
+    </details>
+
+    <details>
+      <summary>What payment method is available?</summary>
+      <p>EcoCash is the supported payment method.</p>
+    </details>
+
+    <details>
+      <summary>Do I need to give my EcoCash PIN?</summary>
+      <p>No. Never enter your EcoCash PIN or security OTP into this website. Payment authentication should happen through the authorized payment provider.</p>
+    </details>
+
+    <details>
+      <summary>Can new customers get a free trial?</summary>
+      <p>Yes. New customers can request the available $0 free trial.</p>
+    </details>
+  </section>
+
 </main>
-<footer>ZimBundles • Affordable data for Zimbabwe • Support available from the site menu</footer>
 
-<div class="modal" id="modal">
-  <div class="sheet">
-    <button class="close" onclick="closeModal()">×</button>
-    <h2 id="mTitle">Bundle</h2><div id="mSub" style="color:#64748b"></div>
-    <div class="features" id="mFeatures"></div>
-    <label>Zimbabwe mobile number</label>
-    <input class="field" id="phone" placeholder="07XXXXXXXX" inputmode="tel">
-    <div class="actions"><button class="btn" style="background:#e8eef5;color:#23364d" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="startCheckout()">Submit Request</button></div>
-    <div class="status" id="status"></div>
+<footer>
+  <strong>ZimBundles</strong>
+  <p>Affordable Data. Stay Connected.</p>
+  <p>© 2026 ZimBundles</p>
+</footer>
+
+
+<!-- CHECKOUT MODAL -->
+
+<div class="modal-bg" id="checkoutModal">
+
+  <div class="modal">
+
+    <h2>Complete Your Order</h2>
+
+    <div class="selected">
+      <div id="selectedPlan"></div>
+      <div style="margin-top:5px">
+        Price: <b id="selectedPrice"></b>
+      </div>
+    </div>
+
+    <label for="phone">EcoCash Phone Number</label>
+
+    <input
+      id="phone"
+      type="tel"
+      inputmode="tel"
+      placeholder="07XXXXXXXX"
+      autocomplete="tel"
+    >
+
+    <div class="message" id="checkoutMessage">
+      Enter the phone number you will use for payment.
+    </div>
+
+    <div class="modal-actions">
+      <button class="cancel" onclick="closeCheckout()">Cancel</button>
+      <button class="continue" id="continueBtn" onclick="continuePayment()">
+        Continue to Payment
+      </button>
+    </div>
+
   </div>
+
 </div>
 
-<div class="modal" id="trialModal">
-  <div class="sheet">
-    <button class="close" onclick="closeTrial()">×</button>
-    <h2>🎁 Free Trial</h2><p style="color:#64748b">New customers only. The trial price is <strong>$0.00</strong>.</p>
-    <label>Zimbabwe mobile number</label><input class="field" id="trialPhone" placeholder="07XXXXXXXX" inputmode="tel">
-    <button class="btn green" style="width:100%" onclick="claimTrial()">Claim $0 Trial</button>
-    <div class="status" id="trialStatus"></div>
-  </div>
-</div>
 
 <script>
-const bundles=[
- {cat:"Hourly",badge:"QUICK USE",name:"1GB Hourly",valid:"Valid for 1 hour",price:"$0.20",desc:"For quick browsing and messaging."},
- {cat:"Hourly",badge:"POPULAR",name:"2GB Hourly",valid:"Valid for 2 hours",price:"$0.35",desc:"Extra data for short sessions."},
- {cat:"Daily",badge:"BEST VALUE",name:"2GB Daily",valid:"Valid for 24 hours",price:"$0.45",desc:"Great for everyday browsing."},
- {cat:"Daily",badge:"POPULAR",name:"5GB Daily",valid:"Valid for 24 hours",price:"$0.85",desc:"More data for streaming and social apps."},
- {cat:"Weekly",badge:"BALANCED",name:"7GB Weekly",valid:"Valid for 7 days",price:"$1.20",desc:"A balanced weekly option."},
- {cat:"Weekly",badge:"MOST POPULAR",name:"15GB Weekly",valid:"Valid for 7 days",price:"$1.99",desc:"Great for heavier weekly usage."},
- {cat:"Monthly",badge:"BEST VALUE",name:"25GB Monthly",valid:"Valid for 30 days",price:"$2.99",desc:"Affordable monthly data."},
- {cat:"Monthly",badge:"HEAVY USE",name:"50GB Monthly",valid:"Valid for 30 days",price:"$4.99",desc:"For customers who use more data."}
+
+const plans = [
+
+  {
+    id: "hourly-1gb",
+    category: "hourly",
+    data: "1GB",
+    duration: "1 Hour",
+    price: 0.20,
+    badge: "Popular"
+  },
+
+  {
+    id: "hourly-2gb",
+    category: "hourly",
+    data: "2GB",
+    duration: "1 Hour",
+    price: 0.35,
+    badge: ""
+  },
+
+  {
+    id: "daily-2gb",
+    category: "daily",
+    data: "2GB",
+    duration: "24 Hours",
+    price: 0.45,
+    badge: "Popular"
+  },
+
+  {
+    id: "daily-5gb",
+    category: "daily",
+    data: "5GB",
+    duration: "24 Hours",
+    price: 0.85,
+    badge: ""
+  },
+
+  {
+    id: "daily-10gb",
+    category: "daily",
+    data: "10GB",
+    duration: "24 Hours",
+    price: 1.35,
+    badge: "Best Value"
+  },
+
+  {
+    id: "weekly-5gb",
+    category: "weekly",
+    data: "5GB",
+    duration: "7 Days",
+    price: 0.90,
+    badge: ""
+  },
+
+  {
+    id: "weekly-15gb",
+    category: "weekly",
+    data: "15GB",
+    duration: "7 Days",
+    price: 1.60,
+    badge: "Popular"
+  },
+
+  {
+    id: "weekly-30gb",
+    category: "weekly",
+    data: "30GB",
+    duration: "7 Days",
+    price: 2.50,
+    badge: "Best Value"
+  },
+
+  {
+    id: "monthly-10gb",
+    category: "monthly",
+    data: "10GB",
+    duration: "30 Days",
+    price: 1.80,
+    badge: ""
+  },
+
+  {
+    id: "monthly-25gb",
+    category: "monthly",
+    data: "25GB",
+    duration: "30 Days",
+    price: 3.00,
+    badge: "Popular"
+  },
+
+  {
+    id: "monthly-50gb",
+    category: "monthly",
+    data: "50GB",
+    duration: "30 Days",
+    price: 4.80,
+    badge: "Best Value"
+  },
+
+  {
+    id: "monthly-100gb",
+    category: "monthly",
+    data: "100GB",
+    duration: "30 Days",
+    price: 7.50,
+    badge: ""
+  }
+
 ];
-let selected=null;
-function render(cat="All"){const g=document.getElementById("grid");g.innerHTML=bundles.filter(b=>cat==="All"||b.cat===cat).map((b,i)=>`<article class="card"><span class="badge ${b.badge==='MOST POPULAR'?'popular':''}">${b.badge}</span><h3>${b.name}</h3><div class="valid">${b.valid}</div><div class="price">${b.price}</div><div class="details" onclick='openDetails(${JSON.stringify(b)})'><span>VIEW DETAILS</span><span>→</span></div></article>`).join("")}
-function openDetails(b){selected=b;document.getElementById("mTitle").textContent=b.name+" — "+b.cat;document.getElementById("mSub").textContent=b.desc;document.getElementById("mFeatures").innerHTML=`<div>✦ ${b.name}</div><div>✦ ${b.valid}</div><div>✦ ${b.price}</div><div>✦ EcoCash payment</div>`;document.getElementById("status").style.display="none";document.getElementById("modal").classList.add("open")}
-function closeModal(){document.getElementById("modal").classList.remove("open")}
-async function startCheckout(){
-  const p=document.getElementById("phone").value.trim();
-  if(!/^((\+263|263|0)?7\d{8})$/.test(p)){show("status","Please enter a valid Zimbabwe mobile number.");return}
-  show("status","Sending your order for review…");
-  try{
-    const r=await fetch("/api/orders",{method:"POST",headers:{"content-type":"application/json"},
-      body:JSON.stringify({bundle:selected.name,price:selected.price,phone:p,type:"bundle"})});
-    const data=await r.json();
-    if(!r.ok) throw new Error(data.error||"Order failed");
-    show("status",`Order ${data.orderId} created. Waiting for approval.`);
-    pollOrder(data.orderId,"status");
-  }catch(e){show("status",e.message);}
-}
-async function pollOrder(id,elementId){
-  const timer=setInterval(async()=>{
-    try{
-      const r=await fetch("/api/orders/"+encodeURIComponent(id)); const d=await r.json();
-      if(d.ok && (d.order.status==="approved"||d.order.status==="rejected")){
-        clearInterval(timer);
-        show(elementId,d.order.status==="approved"?"✅ Order approved. Your bundle can now be activated.":"❌ Order was not approved.");
+
+
+let selectedPlan = null;
+let currentCategory = "all";
+
+
+function renderPlans(category = "all") {
+
+  currentCategory = category;
+
+  const container = document.getElementById("plansContainer");
+
+  const filtered = category === "all"
+    ? plans
+    : plans.filter(p => p.category === category);
+
+  container.innerHTML = filtered.map(plan => `
+
+    <div class="plan">
+
+      ${plan.badge
+        ? `<div class="badge">${plan.badge}</div>`
+        : ""
       }
-    }catch(e){}
-  },3000);
+
+      <h3>${capitalize(plan.category)}</h3>
+
+      <div class="data">${plan.data}</div>
+
+      <div class="duration">${plan.duration}</div>
+
+      <div class="price">$${plan.price.toFixed(2)}</div>
+
+      <button
+        class="buy"
+        onclick="openCheckout('${plan.id}')"
+      >
+        Buy Now
+      </button>
+
+    </div>
+
+  `).join("");
 }
-function show(id,t){const e=document.getElementById(id);e.textContent=t;e.style.display="block"}
-function openTrial(){document.getElementById("trialStatus").style.display="none";document.getElementById("trialModal").classList.add("open")}
-function closeTrial(){document.getElementById("trialModal").classList.remove("open")}
-async function claimTrial(){
-  const p=document.getElementById("trialPhone").value.trim();
-  if(!/^(\+263|263|0)?7\d{8}$/.test(p)){show("trialStatus","Please enter a valid Zimbabwe mobile number.");return}
-  show("trialStatus","Sending your $0 trial request…");
-  try{
-    const r=await fetch("/api/orders",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({bundle:"Free Trial",price:0,phone:p,type:"trial"})});
-    const data=await r.json();
-    if(!r.ok) throw new Error(data.error||"Trial request failed");
-    show("trialStatus",`Trial request ${data.orderId} sent. Waiting for approval.`);
-    pollOrder(data.orderId,"trialStatus");
-  }catch(e){show("trialStatus",e.message);}
+
+
+function capitalize(value) {
+  return value.charAt(0).toUpperCase() + value.slice(1);
 }
-document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));t.classList.add("active");render(t.dataset.cat)});
-render();
-</script>
-</body>
-  </html>
+
+
+function filterPlans(category, button) {
+
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.classList.remove("active");
+  });
+
+  button.classList.add("active");
+
+  renderPlans(category);
+}
+
+
+function scrollToPlans() {
+
+  document.getElementById("plans").scrollIntoView({
+    behavior: "smooth"
+  });
+
+}
+
+
+function openCheckout(planId) {
+
+  selectedPlan = plans.find(p => p.id === planId);
+
+  if (!selectedPlan) {
+    alert("Package could not be found.");
+    return;
+  }
+
+  document.getElementById("selectedPlan").innerHTML =
+    `<strong>${selectedPlan.data} ${capitalize(selectedPlan.category)} Bundle</strong>
+     <br>${selectedPlan.duration}`;
+
+  document.getElementById("selectedPrice").textContent =
+    "$" + selectedPlan.price.toFixed(2);
+
+  document.getElementById("phone").value = "";
+
+  document.getElementById("checkoutMessage").className = "message";
+
+  document.getElementById("checkoutMessage").textContent =
+    "Enter the phone number you will use for payment.";
+
+  document.getElementById("checkoutModal").classList.add("show");
+
+  setTimeout(() => {
+    document.getElementById("phone").focus();
+  }, 100);
+
+}
+
+
+function closeCheckout() {
+
+  document.getElementById("checkoutModal").classList.remove("show");
+
+  selectedPlan = null;
+
+}
+
+
+function normalizeZimbabwePhone(phone) {
+
+  let value = phone.trim().replace(/\s+/g, "");
+
+  if (/^07\d{8}$/.test(value)) {
+    return "+263" + value.substring(1);
+  }
+
+  if (/^7\d{8}$/.test(value)) {
+    return "+263" + value;
+  }
+
+  if (/^\+2637\d{8}$/.test(value)) {
+    return value;
+  }
+
+  if (/^2637\d{8}$/.test(value)) {
+    return "+" + value;
+  }
+
+  return null;
+}
+
+
+async function continuePayment() {
+
+  if (!selectedPlan) {
+    return;
+  }
+
+  const phoneInput =
+    document.getElementById("phone");
+
+  const message =
+    document.getElementById("checkoutMessage");
+
+  const button =
+    document.getElementById("continueBtn");
+
+  const phone =
+    normalizeZimbabwePhone(phoneInput.value);
+
+  if (!phone) {
+
+    message.className = "message error";
+
+    message.textContent =
+      "Please enter a valid Zimbabwe number, for example 0712345678.";
+
+    phoneInput.focus();
+
+    return;
+  }
+
+
+  button.disabled = true;
+
+  button.textContent = "Creating Order...";
+
+  message.className = "message";
+
+  message.textContent =
+    "Please wait...";
+
+
+  try {
+
+    const response = await fetch("/api/orders", {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+
+        type: "bundle",
+
+        plan_id: selectedPlan.id,
+
+        plan: selectedPlan.data,
+
+        category: selectedPlan.category,
+
+        duration: selectedPlan.duration,
+
+        amount: selectedPlan.price,
+
+        phone: phone
+
+      })
+
+    });
+
+
+    const data = await response.json();
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.error || "Unable to create order."
+      );
+
+    }
+
+
+    /*
+      IMPORTANT:
+
+      The website cannot invent an EcoCash payment
+      checkout URL.
+
+      When you have your authorized payment-provider
+      checkout URL, put it here.
+
+      Example:
+
+      const PAYMENT_URL =
+        "YOUR_REAL_AUTHORIZED_CHECKOUT_URL";
+
+      Then redirect using:
+
+      window.location.href =
+        PAYMENT_URL + "?order_id=" + encodeURIComponent(data.id);
+
+    */
+
+
+    const PAYMENT_URL = "";
+
+
+    if (PAYMENT_URL) {
+
+      const separator =
+        PAYMENT_URL.includes("?") ? "&" : "?";
+
+      window.location.href =
+        PAYMENT_URL +
+        separator +
+        "order_id=" +
+        encodeURIComponent(data.id);
+
+      return;
+    }
+
+
+    /*
+      No payment provider URL has been configured yet.
+      Keep the customer on the site instead of sending
+      them to a fake payment page.
+    */
+
+    message.className = "message success";
+
+    message.innerHTML =
+      "Order created successfully.<br><br>" +
+      "Order ID: <strong>" +
+      escapeHtml(data.id || "") +
+      "</strong><br><br>" +
+      "The payment checkout is not connected yet. " +
+      "Please configure the authorized EcoCash/payment-provider checkout URL.";
+
+    button.textContent = "Order Created";
+
+
+  } catch (error) {
+
+    message.className = "message error";
+
+    message.textContent =
+      error.message ||
+      "Something went wrong. Please try again.";
+
+    button.disabled = false;
+
+    button.textContent =
+      "Continue to Payment";
+
+  }
+
+}
+
+
+async function openTrial() {
+
+  const phone = prompt(
+    "Enter your Zimbabwe phone number for the free trial:"
+  );
+
+  if (!phone) {
+    return;
+  }
+
+  const normalized =
+    normalizeZimbabwePhone(phone);
+
+  if (!normalized) {
+
+    alert(
+      "Please enter a valid Zimbabwe number, for example 0712345678."
+    );
+
+    return;
+  }
+
+
+  try {
+
+    const response = await fetch("/api/orders", {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+
+        type: "trial",
+
+        plan_id: "free-trial",
+
+        plan: "Free Trial",
+
+        category: "trial",
+
+        duration: "Trial",
+
+        amount: 0,
+
+        phone: normalized
+
+      })
+
+    });
+
+
+    const data = await response.json();
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.error || "Unable to request trial."
+      );
+
+    }
+
+
+    alert(
+      "Free trial request submitted successfully.\n\n" +
+      "Order ID: " +
+      (data.id || "Pending")
+    );
+
+
+  } catch (error) {
+
+    alert(
+      error.message ||
+      "Unable to submit your free trial request."
+    );
+
+  }
+
+}
+
+
+function escapeHtml(value) {
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+document.getElementById("checkoutModal")
+  .addEventListener("click", functio
