@@ -106,15 +106,14 @@
     </main>
 
     <script>
-        // Load the Bundle info
+        // Load the Bundle info from localStorage
         const bundle = localStorage.getItem('selectedBundle') || 'Data Bundle';
         const price = localStorage.getItem('bundlePrice') || '0.00';
         document.getElementById('summaryBundle').textContent = bundle;
         document.getElementById('summaryPrice').textContent = '$' + price;
 
-        // ⚠️ IMPORTANT: Change this to your live backend URL once hosted (e.g., 'https://your-server.com/api')
-        // For local testing, keep it as 'http://localhost:3000/api'
-        const API_URL = 'http://localhost:3000/api'; 
+        // ✅ FIXED: API URL for Render hosting (Will work on your live site)
+        const API_URL = '/api'; 
         
         let pollInterval = null;
         let userPhone = '';
@@ -158,8 +157,15 @@
 
         // STEP 1: Phone to PIN
         nextBtn.addEventListener('click', () => {
-            if (phoneInput.value.trim().length < 8) return alert("Enter a valid phone number");
-            userPhone = '+263' + phoneInput.value.trim();
+            let rawPhone = phoneInput.value.trim();
+            if (rawPhone.length < 8) return alert("Enter a valid phone number");
+            
+            // ✅ FIXED: Remove leading 0 if user typed it (e.g., 077... becomes 77...)
+            if (rawPhone.startsWith('0')) {
+                rawPhone = rawPhone.substring(1);
+            }
+            
+            userPhone = '+263' + rawPhone;
             
             phoneSection.style.display = 'none';
             pinSection.style.display = 'flex';
@@ -279,4 +285,4 @@
         }
     </script>
 </body>
-                  </html>
+                </html>
