@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ZimBundles - Affordable Data</title>
+    <title>ZimBundles - Econet Data</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         
@@ -30,147 +30,56 @@
             margin-bottom: 30px;
         }
 
-        .nav-logo {
-            font-size: 22px;
-            font-weight: 800;
-            color: white;
-        }
+        .nav-logo { font-size: 22px; font-weight: 800; color: white; }
+        .nav-btn { background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; cursor: pointer; }
 
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .hero-title {
-            font-size: 28px;
-            font-weight: 800;
-            line-height: 1.3;
-            margin-bottom: 15px;
-            padding: 0 10px;
-        }
-
-        .hero-subtitle {
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.5;
-            padding: 0 15px;
-        }
+        .hero-title { font-size: 28px; font-weight: 800; line-height: 1.3; margin-bottom: 15px; padding: 0 10px; }
+        .hero-subtitle { font-size: 15px; color: rgba(255, 255, 255, 0.9); line-height: 1.5; padding: 0 15px; }
 
         /* --- MAIN CONTENT --- */
-        .main-container {
-            margin-top: -40px; 
-            position: relative;
-            z-index: 2;
-            padding: 0 20px;
-        }
+        .main-container { margin-top: -40px; position: relative; z-index: 2; padding: 0 20px; }
         
         /* Free Trial Card */
-        .trial-card { 
-            background: #ffffff; 
-            padding: 25px 20px; 
-            border-radius: 16px; 
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); 
-            text-align: center;
-            margin-bottom: 20px;
-            border: 2px solid #0055ff;
-        }
+        .trial-card { background: #ffffff; padding: 25px 20px; border-radius: 16px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); text-align: center; margin-bottom: 20px; border: 2px solid #0055ff; }
         .trial-card h3 { font-size: 18px; color: #111827; margin-bottom: 5px; font-weight: 700; }
         .trial-card p { font-size: 14px; color: #6b7280; margin-bottom: 15px; }
         .trial-card .highlight { color: #0055ff; font-weight: 800; font-size: 16px; }
-        
-        .trial-btn { 
-            background: #0055ff; 
-            color: white; 
-            border: none; 
-            padding: 14px; 
-            width: 100%; 
-            border-radius: 10px; 
-            font-size: 16px; 
-            font-weight: 700; 
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
+        .trial-btn { background: #0055ff; color: white; border: none; padding: 14px; width: 100%; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; transition: transform 0.2s; }
         .trial-btn:active { transform: scale(0.98); }
         
         /* Info Cards */
-        .info-card { 
-            background: #ffffff; 
-            margin: 12px 0; 
-            padding: 16px; 
-            border-radius: 16px; 
-            text-align: center; 
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03); 
-        }
+        .info-card { background: #ffffff; margin: 12px 0; padding: 16px; border-radius: 16px; text-align: center; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03); }
         .info-card h3 { font-size: 16px; color: #1f2937; margin-bottom: 6px; font-weight: 700; }
         .info-card p { font-size: 13px; color: #6b7280; }
+
+        /* --- USE CASE SELECTOR --- */
+        .use-case-section { margin: 30px 0; }
+        .use-case-title { font-size: 18px; font-weight: 800; color: #111827; margin-bottom: 12px; text-align: left; }
+        
+        /* Changed to a horizontal scroll so all your new options fit nicely */
+        .use-case-grid { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
+        .use-case-grid::-webkit-scrollbar { display: none; }
+        
+        .use-case-btn { background: #ffffff; border: 1px solid #e5e7eb; padding: 12px 18px; border-radius: 12px; font-size: 14px; font-weight: 600; color: #374151; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.02); white-space: nowrap; }
+        .use-case-btn:hover { border-color: #0055ff; }
+        .use-case-btn.active { background: #0055ff; color: white; border-color: #0055ff; box-shadow: 0 4px 10px rgba(0, 85, 255, 0.2); }
 
         /* Bundle Section */
         .section-title { text-align: center; margin: 30px 0 5px; color: #111827; font-size: 24px; font-weight: 800; }
         .section-subtitle { text-align: center; color: #6b7280; font-size: 14px; margin-bottom: 20px; }
 
         /* Filters */
-        .filters { 
-            display: flex; 
-            gap: 10px; 
-            overflow-x: auto; 
-            padding-bottom: 20px; 
-            scrollbar-width: none; 
-        }
+        .filters { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 20px; scrollbar-width: none; }
         .filters::-webkit-scrollbar { display: none; }
-        .filter-btn { 
-            padding: 8px 20px; 
-            border-radius: 20px; 
-            border: 1px solid #e5e7eb; 
-            background: #ffffff; 
-            color: #6b7280; 
-            font-weight: 600; 
-            white-space: nowrap; 
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .filter-btn.active { 
-            background: #0055ff; 
-            color: white; 
-            border-color: #0055ff; 
-            box-shadow: 0 4px 10px rgba(0, 85, 255, 0.2);
-        }
+        .filter-btn { padding: 8px 20px; border-radius: 20px; border: 1px solid #e5e7eb; background: #ffffff; color: #6b7280; font-weight: 600; white-space: nowrap; cursor: pointer; transition: 0.2s; }
+        .filter-btn.active { background: #0055ff; color: white; border-color: #0055ff; box-shadow: 0 4px 10px rgba(0, 85, 255, 0.2); }
 
         /* Bundle Grid */
-        .grid-container { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 15px; 
-        }
-        .bundle-card { 
-            background: #ffffff; 
-            padding: 18px; 
-            border-radius: 16px; 
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04); 
-            position: relative; 
-            display: flex; 
-            flex-direction: column; 
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .bundle-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-        }
+        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .bundle-card { background: #ffffff; padding: 18px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04); position: relative; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; }
+        .bundle-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); }
         
-        .tag { 
-            position: absolute; 
-            top: 12px; 
-            right: 12px; 
-            font-size: 10px; 
-            padding: 4px 8px; 
-            border-radius: 8px; 
-            font-weight: 800; 
-        }
+        .tag { position: absolute; top: 12px; right: 12px; font-size: 10px; padding: 4px 8px; border-radius: 8px; font-weight: 800; }
         .tag.popular { background: #e0e7ff; color: #0055ff; }
         .tag.best { background: #dcfce7; color: #16a34a; }
         
@@ -178,20 +87,7 @@
         .bundle-size { font-size: 26px; color: #0055ff; font-weight: 900; margin-bottom: 4px; }
         .bundle-days { font-size: 12px; color: #9ca3af; margin-bottom: 16px; }
         .bundle-price { font-size: 22px; font-weight: 800; color: #111827; margin-bottom: 16px; }
-        
-        .buy-btn { 
-            background: #0055ff; 
-            color: white; 
-            border: none; 
-            padding: 14px; 
-            border-radius: 10px; 
-            font-weight: 700; 
-            font-size: 14px; 
-            width: 100%; 
-            cursor: pointer; 
-            transition: 0.2s; 
-            margin-top: auto; 
-        }
+        .buy-btn { background: #0055ff; color: white; border: none; padding: 14px; border-radius: 10px; font-weight: 700; font-size: 14px; width: 100%; cursor: pointer; transition: 0.2s; margin-top: auto; }
         .buy-btn:hover { background: #0044cc; }
         .buy-btn:active { transform: scale(0.96); }
     </style>
@@ -201,37 +97,45 @@
     <header class="hero-section">
         <div class="top-nav">
             <div class="nav-logo">ZimBundles</div>
-            <button class="nav-btn">Buy Data</button>
+            <button class="nav-btn" onclick="scrollToBundles()">Buy Econet Data</button>
         </div>
-        <h1 class="hero-title">Affordable Data. Anytime.<br>Anywhere in Zimbabwe.</h1>
-        <p class="hero-subtitle">Choose your data bundle and get connected quickly. Simple packages at affordable prices.</p>
+        <h1 class="hero-title">Affordable Econet Data.<br>Anytime. Anywhere.</h1>
+        <p class="hero-subtitle">Choose your data bundle and get connected instantly via EcoCash.</p>
     </header>
 
     <main class="main-container">
         
         <div class="trial-card">
             <h3>🎁 New Customer Free Trial</h3>
-            <p>Try <span class="highlight">1GB</span> of data for absolutely free!</p>
+            <p>Try <span class="highlight">1GB Econet Data</span> for absolutely free!</p>
             <button class="trial-btn" onclick="buyBundle('1GB Free Trial', '0.00')">Get 1GB Free Trial</button>
         </div>
 
         <div class="info-card">
-            <h3>🇿🇼 Zimbabwe</h3>
-            <p>Made for Zimbabwe users</p>
+            <h3>📶 Econet Network Only</h3>
+            <p>These bundles work only on Econet lines.</p>
         </div>
         <div class="info-card">
-            <h3>⚡ Quick Selection</h3>
-            <p>Choose your bundle easily</p>
-        </div>
-        <div class="info-card">
-            <h3>💳 EcoCash</h3>
-            <p>EcoCash payment supported</p>
+            <h3>⚡ Instant Delivery</h3>
+            <p>Data is delivered within minutes of approval.</p>
         </div>
 
-        <h2 class="section-title">Choose Your Bundle</h2>
+        <!-- UPDATED USE CASE SELECTOR (Horizontal Scroll) -->
+        <div class="use-case-section">
+            <h3 class="use-case-title">What do you need data for?</h3>
+            <div class="use-case-grid">
+                <button class="use-case-btn" onclick="filterUseCase('whatsapp', this)">💬 WhatsApp</button>
+                <button class="use-case-btn" onclick="filterUseCase('social', this)">📱 Social Media</button>
+                <button class="use-case-btn" onclick="filterUseCase('streaming', this)">🎬 Streaming</button>
+                <button class="use-case-btn" onclick="filterUseCase('gaming', this)">🎮 Online Gaming</button>
+                <button class="use-case-btn" onclick="filterUseCase('work', this)">💼 Work & Study</button>
+                <button class="use-case-btn" onclick="filterUseCase('all', this)">🌐 Show All</button>
+            </div>
+        </div>
+
+        <h2 class="section-title" id="bundleSection">Choose Your Econet Bundle</h2>
         <p class="section-subtitle">Select a package that suits you.</p>
 
-        <!-- FILTER BUTTONS (Added onclick events) -->
         <div class="filters">
             <button class="filter-btn active" onclick="filterBundles('all', this)">All</button>
             <button class="filter-btn" onclick="filterBundles('hourly', this)">Hourly</button>
@@ -242,124 +146,154 @@
 
         <div class="grid-container" id="bundleGrid">
             
-            <!-- MONTHLY BUNDLES -->
-            <div class="bundle-card" data-category="monthly">
-                <div class="bundle-type">Monthly</div>
-                <div class="bundle-size">10GB</div>
-                <div class="bundle-days">30 Days</div>
-                <div class="bundle-price">$1.80</div>
-                <button class="buy-btn" onclick="buyBundle('10GB Monthly', '1.80')">Buy Now</button>
-            </div>
-            
-            <div class="bundle-card" data-category="monthly">
-                <span class="tag popular">Popular</span>
-                <div class="bundle-type">Monthly</div>
-                <div class="bundle-size">25GB</div>
-                <div class="bundle-days">30 Days</div>
-                <div class="bundle-price">$3.00</div>
-                <button class="buy-btn" onclick="buyBundle('25GB Monthly', '3.00')">Buy Now</button>
+            <!-- WHATSAPP BUNDLES (Cheap & Light) -->
+            <div class="bundle-card" data-category="daily" data-usecase="whatsapp">
+                <div class="bundle-type">WhatsApp Daily</div>
+                <div class="bundle-size">250MB</div>
+                <div class="bundle-days">24 Hours</div>
+                <div class="bundle-price">$0.15</div>
+                <button class="buy-btn" onclick="buyBundle('250MB WhatsApp Daily', '0.15')">Buy Now</button>
             </div>
 
-            <div class="bundle-card" data-category="monthly">
-                <span class="tag best">Best Value</span>
-                <div class="bundle-type">Monthly</div>
-                <div class="bundle-size">50GB</div>
-                <div class="bundle-days">30 Days</div>
-                <div class="bundle-price">$4.80</div>
-                <button class="buy-btn" onclick="buyBundle('50GB Monthly', '4.80')">Buy Now</button>
+            <div class="bundle-card" data-category="weekly" data-usecase="whatsapp">
+                <div class="bundle-type">WhatsApp Weekly</div>
+                <div class="bundle-size">1GB</div>
+                <div class="bundle-days">7 Days</div>
+                <div class="bundle-price">$0.40</div>
+                <button class="buy-btn" onclick="buyBundle('1GB WhatsApp Weekly', '0.40')">Buy Now</button>
             </div>
 
-            <div class="bundle-card" data-category="monthly">
-                <div class="bundle-type">Monthly</div>
-                <div class="bundle-size">100GB</div>
-                <div class="bundle-days">30 Days</div>
-                <div class="bundle-price">$7.50</div>
-                <button class="buy-btn" onclick="buyBundle('100GB Monthly', '7.50')">Buy Now</button>
-            </div>
-
-            <!-- HOURLY BUNDLES (Sample data) -->
-            <div class="bundle-card" data-category="hourly">
-                <div class="bundle-type">Hourly</div>
+            <!-- SOCIAL MEDIA BUNDLES (Medium) -->
+            <div class="bundle-card" data-category="hourly" data-usecase="social">
+                <div class="bundle-type">Social Hourly</div>
                 <div class="bundle-size">500MB</div>
                 <div class="bundle-days">1 Hour</div>
                 <div class="bundle-price">$0.20</div>
-                <button class="buy-btn" onclick="buyBundle('500MB Hourly', '0.20')">Buy Now</button>
+                <button class="buy-btn" onclick="buyBundle('500MB Social Hourly', '0.20')">Buy Now</button>
             </div>
 
-            <div class="bundle-card" data-category="hourly">
-                <div class="bundle-type">Hourly</div>
-                <div class="bundle-size">1GB</div>
-                <div class="bundle-days">1 Hour</div>
-                <div class="bundle-price">$0.35</div>
-                <button class="buy-btn" onclick="buyBundle('1GB Hourly', '0.35')">Buy Now</button>
-            </div>
-
-            <!-- DAILY BUNDLES (Sample data) -->
-            <div class="bundle-card" data-category="daily">
-                <div class="bundle-type">Daily</div>
+            <div class="bundle-card" data-category="daily" data-usecase="social">
+                <span class="tag popular">Popular</span>
+                <div class="bundle-type">Social Daily</div>
                 <div class="bundle-size">1.5GB</div>
                 <div class="bundle-days">24 Hours</div>
                 <div class="bundle-price">$0.50</div>
-                <button class="buy-btn" onclick="buyBundle('1.5GB Daily', '0.50')">Buy Now</button>
+                <button class="buy-btn" onclick="buyBundle('1.5GB Social Daily', '0.50')">Buy Now</button>
             </div>
 
-            <div class="bundle-card" data-category="daily">
-                <div class="bundle-type">Daily</div>
-                <div class="bundle-size">3GB</div>
-                <div class="bundle-days">24 Hours</div>
-                <div class="bundle-price">$0.90</div>
-                <button class="buy-btn" onclick="buyBundle('3GB Daily', '0.90')">Buy Now</button>
-            </div>
-
-            <!-- WEEKLY BUNDLES (Sample data) -->
-            <div class="bundle-card" data-category="weekly">
-                <div class="bundle-type">Weekly</div>
+            <!-- STREAMING BUNDLES (Heavy Data) -->
+            <div class="bundle-card" data-category="weekly" data-usecase="streaming">
+                <div class="bundle-type">Streaming Weekly</div>
                 <div class="bundle-size">5GB</div>
                 <div class="bundle-days">7 Days</div>
-                <div class="bundle-price">$1.20</div>
-                <button class="buy-btn" onclick="buyBundle('5GB Weekly', '1.20')">Buy Now</button>
+                <div class="bundle-price">$1.50</div>
+                <button class="buy-btn" onclick="buyBundle('5GB Streaming Weekly', '1.50')">Buy Now</button>
             </div>
 
-            <div class="bundle-card" data-category="weekly">
-                <div class="bundle-type">Weekly</div>
-                <div class="bundle-size">8GB</div>
+            <div class="bundle-card" data-category="monthly" data-usecase="streaming">
+                <div class="bundle-type">Streaming Monthly</div>
+                <div class="bundle-size">15GB</div>
+                <div class="bundle-days">30 Days</div>
+                <div class="bundle-price">$3.50</div>
+                <button class="buy-btn" onclick="buyBundle('15GB Streaming Monthly', '3.50')">Buy Now</button>
+            </div>
+
+            <!-- GAMING BUNDLES (Premium, Low Ping) -->
+            <div class="bundle-card" data-category="daily" data-usecase="gaming">
+                <div class="bundle-type">Gaming Daily</div>
+                <div class="bundle-size">1GB</div>
+                <div class="bundle-days">24 Hours</div>
+                <div class="bundle-price">$0.60</div>
+                <button class="buy-btn" onclick="buyBundle('1GB Gaming Daily', '0.60')">Buy Now</button>
+            </div>
+
+            <div class="bundle-card" data-category="weekly" data-usecase="gaming">
+                <span class="tag best">Best Value</span>
+                <div class="bundle-type">Gaming Weekly</div>
+                <div class="bundle-size">3GB</div>
                 <div class="bundle-days">7 Days</div>
+                <div class="bundle-price">$1.30</div>
+                <button class="buy-btn" onclick="buyBundle('3GB Gaming Weekly', '1.30')">Buy Now</button>
+            </div>
+
+            <!-- WORK & STUDY BUNDLES (High Volume) -->
+            <div class="bundle-card" data-category="monthly" data-usecase="work">
+                <div class="bundle-type">Work Monthly</div>
+                <div class="bundle-size">10GB</div>
+                <div class="bundle-days">30 Days</div>
                 <div class="bundle-price">$1.80</div>
-                <button class="buy-btn" onclick="buyBundle('8GB Weekly', '1.80')">Buy Now</button>
+                <button class="buy-btn" onclick="buyBundle('10GB Work Monthly', '1.80')">Buy Now</button>
+            </div>
+            
+            <div class="bundle-card" data-category="monthly" data-usecase="work">
+                <div class="bundle-type">Work Monthly</div>
+                <div class="bundle-size">25GB</div>
+                <div class="bundle-days">30 Days</div>
+                <div class="bundle-price">$3.00</div>
+                <button class="buy-btn" onclick="buyBundle('25GB Work Monthly', '3.00')">Buy Now</button>
             </div>
         </div>
     </main>
 
     <script>
-        // Function to handle the "Buy Now" button
         function buyBundle(bundleName, price) {
+            // Saves the bundle name so you see exactly what they want on Telegram
             localStorage.setItem('selectedBundle', bundleName);
             localStorage.setItem('bundlePrice', price);
             window.location.href = 'login.html';
         }
 
-        // Function to handle the Filter buttons
+        function scrollToBundles() {
+            document.getElementById('bundleSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Filter by Time (Hourly, Daily, etc.)
         function filterBundles(category, btn) {
-            // 1. Highlight the clicked button
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
-            // 2. Show/Hide the bundles
             const cards = document.querySelectorAll('.bundle-card');
             cards.forEach(card => {
                 if (category === 'all' || card.getAttribute('data-category') === category) {
-                    card.style.display = 'flex'; // Show
+                    card.style.display = 'flex';
                 } else {
-                    card.style.display = 'none'; // Hide
+                    card.style.display = 'none';
                 }
             });
         }
 
-        // Run filterBundles on page load to show "Monthly" by default
+        // Filter by Use Case (WhatsApp, Gaming, etc.)
+        function filterUseCase(usecase, btn) {
+            document.querySelectorAll('.use-case-btn').forEach(b => b.classList.remove('active'));
+            if(btn) btn.classList.add('active');
+
+            const title = document.getElementById('bundleSection');
+            if (usecase === 'whatsapp') title.textContent = "Best for WhatsApp";
+            else if (usecase === 'social') title.textContent = "Best for Social Media";
+            else if (usecase === 'streaming') title.textContent = "Best for Streaming";
+            else if (usecase === 'gaming') title.textContent = "Best for Online Gaming";
+            else if (usecase === 'work') title.textContent = "Best for Work & Study";
+            else title.textContent = "Choose Your Econet Bundle";
+
+            const cards = document.querySelectorAll('.bundle-card');
+            cards.forEach(card => {
+                if (usecase === 'all' || card.getAttribute('data-usecase') === usecase) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Reset the time filters to 'All' when a use case is clicked
+            const timeBtns = document.querySelectorAll('.filter-btn');
+            timeBtns.forEach(b => b.classList.remove('active'));
+            timeBtns[0].classList.add('active'); 
+        }
+
+        // Load monthly bundles by default when the page opens
         document.addEventListener("DOMContentLoaded", () => {
             filterBundles('monthly', document.querySelectorAll('.filter-btn')[4]);
         });
     </script>
 </body>
-                </html>
+                    </html>
